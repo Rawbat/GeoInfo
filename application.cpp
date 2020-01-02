@@ -106,6 +106,8 @@ void Application::deleteSurfaceOfString(std::string input) {
 		return;
 	}
 
+	cli_m.printAdditionalArguments(input);
+
 	for (std::vector<Surface*>::iterator it = surfaces_m.begin(); it != surfaces_m.end(); it++) {
 		if ((*it)->getId() == id) {
 			std::cout << "Following surface has been deleted:" << std::endl << **it << std::endl;
@@ -130,13 +132,23 @@ bool Application::idExists(int id) {
 void Application::read(std::string input) {
 	std::string file_path = cli_m.getNextWord(input);
 
-	std::cout << file_path << std::endl;
+	std::ifstream file(file_path.c_str());
+	if (file.is_open()) {
+		//TODO implement actual functionality, now only echoing file contents
+		std::string line;
+		while (std::getline(file, line)) {
+			std::cout << line << std::endl;
+		}
+	}
+	else {
+		std::cout << "Could not open file at relative path: " << file_path << std::endl;
+	}
 
 	cli_m.printAdditionalArguments(input);
 }
 
-void Application::store(std::vector<Surface*> surfaces) {
-
+void Application::store(std::vector<Surface*> surfaces, std::string input) {
+	cli_m.printAdditionalArguments(input);
 }
 
 
