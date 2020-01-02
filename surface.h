@@ -4,9 +4,9 @@
 class Surface {
 	public:
 		//Constructors
-		Surface();
+		//Surface();
 
-		virtual int getArea() const = 0;
+		virtual double getArea() const = 0;
 	private:
 		int id_m;
 };

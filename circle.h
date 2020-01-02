@@ -18,6 +18,8 @@ class Circle : public Surface {
 		void setCenter(Point center);
 		void setRadius(int radius);
 
+		virtual double getArea() const;
+
 		//Destructor
 		//~Circle();
 		friend std::ostream& operator<<(std::ostream& out, const Circle& circle);

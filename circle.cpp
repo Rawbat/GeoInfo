@@ -2,7 +2,7 @@
 #include "circle.h"
 
 
-Circle::Circle(Point center, int radius = 1) {
+Circle::Circle(Point center, int radius) {
 	center_m = center;
 	radius_m = radius;
 }
@@ -19,6 +19,12 @@ void Circle::setCenter(Point center) {
 
 void Circle::setRadius(int radius) {
 	radius_m = radius;
+}
+
+double Circle::getArea() const {
+	double area = 0;
+	//TODO calculate and return area
+	return area;
 }
 
 std::ostream& operator<<(std::ostream& out, const Circle& circle) {
