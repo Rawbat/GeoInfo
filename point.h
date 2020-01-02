@@ -2,25 +2,25 @@
 #define POINT_H
 
 class Point {
-public:
+	public:
 
-	//Constructors
-	Point();
-	Point(int x, int y);
+		//Constructors
+		Point();
+		Point(int x, int y);
 
-	//Getter
-	int getX() { return x_m; }
-	int getY() { return y_m; }
+		//Getter
+		int getX() { return x_m; }
+		int getY() { return y_m; }
 
-	//Setter
-	void setX();
-	void setY();
+		//Setter
+		void setX(int x);
+		void setY(int y);
 
-	//Destructor
-	~Point();
-private:
-	int x_m;
-	int y_m;
+		//Destructor
+		~Point();
+	private:
+		int x_m;
+		int y_m;
 };
 
 #endif
