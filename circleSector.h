@@ -4,10 +4,10 @@
 #include "surface.h"
 #include "point.h"
 
-class circleSector : public Surface {
+class CircleSector : public Surface {
 	public:
 		//Constructors
-		circleSector(Point center, int radius, double aperture, Point opening_point);
+		CircleSector(Point center, int radius, double aperture, Point opening_point);
 
 		//Getter
 		Point getCenter() const { return center_m; }
