@@ -14,12 +14,15 @@ class CircleSector : public Surface {
 		int getRadius() const { return radius_m; }
 		double getAperture() const { return aperture_m; }
 		Point getOpeningPoint() const { return opening_point_m; }
+		double const getArea();
 
 		//Setter
-		void setCenter();
-		void setRadius();
-		void setAperture();
-		void setOpeningPoint();
+		void setCenter(Point center);
+		void setCenter(int x, int y);
+		void setRadius(int radius);
+		void setAperture(double aperture);
+		void setOpeningPoint(Point opening_point);
+		void setOpeningPoint(int x, int y);
 
 		friend std::ostream& operator<<(std::ostream& out, const CircleSector& circleSector);
 		std::ostream& print(std::ostream& out) const;

@@ -1,6 +1,8 @@
 #include "point.h"
 #include "circle.h"
-
+#define _USE_MATH_DEFINES
+#include <math.h>
+#include <cmath>
 
 Circle::Circle(int id, Point center, int radius) {
 	center_m = center;
@@ -25,7 +27,7 @@ void Circle::setRadius(int radius) {
 
 double Circle::getArea() const {
 	double area = 0;
-	//TODO calculate and return area
+	area = std::pow(getRadius(), 2) * M_PI;
 	return area;
 }
 
