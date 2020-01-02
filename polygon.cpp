@@ -15,6 +15,7 @@ Polygon::Polygon(int id, std::vector<Point> points) {
 	}
 
 	id_m = id;
+	setName("polygon");
 
 	//TODO check for intersections
 }
@@ -26,6 +27,7 @@ Polygon::Polygon(int id, std::vector<Line> edges) {
 	edges_m = edges;
 
 	id_m = id;
+	setName("polygon");
 
 	//TODO check for intersections
 }
@@ -34,6 +36,15 @@ double Polygon::getArea() const {
 	double area = 0;
 	//TODO calculate and return area
 	return area;
+}
+
+std::ostream& operator<<(std::ostream& out, const Polygon& polygon) {
+	out << polygon.getName() << " " << polygon.getId();
+	return out;
+}
+
+std::ostream& Polygon::print(std::ostream& out) const {
+	return out << this;
 }
 
 Polygon::~Polygon() {

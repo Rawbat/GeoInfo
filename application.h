@@ -18,6 +18,8 @@ class Application {
 		void createSurfaceOfString(std::string input);
 		void deleteSurfaceOfString(std::string input);
 
+		void printSurfaces();
+
 		CommandLineInterface cli_m;
 
 		std::vector<Surface*> surfaces_m;

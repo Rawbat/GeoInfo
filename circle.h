@@ -23,6 +23,7 @@ class Circle : public Surface {
 		//Destructor
 		//~Circle();
 		friend std::ostream& operator<<(std::ostream& out, const Circle& circle);
+		std::ostream& print(std::ostream& out) const;
 	private:
 		Point center_m;
 		int radius_m;

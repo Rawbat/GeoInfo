@@ -21,6 +21,9 @@ class CircleSector : public Surface {
 		void setAperture();
 		void setOpeningPoint();
 
+		friend std::ostream& operator<<(std::ostream& out, const CircleSector& circleSector);
+		std::ostream& print(std::ostream& out) const;
+
 		//Destructor
 		//~circleSector();
 

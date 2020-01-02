@@ -6,6 +6,7 @@ Circle::Circle(int id, Point center, int radius) {
 	center_m = center;
 	radius_m = radius;
 	id_m = id;
+	setName("circle");
 }
 
 
@@ -29,6 +30,10 @@ double Circle::getArea() const {
 }
 
 std::ostream& operator<<(std::ostream& out, const Circle& circle) {
-	out << "(" << circle.getCenter().getX() << ", " << circle.getCenter().getY() << ") " << circle.getRadius();
+	out << circle.getName() << " " << circle.getId() << " " << "(" << circle.getCenter().getX() << ", " << circle.getCenter().getY() << ") " << circle.getRadius();
 	return out;
+}
+
+std::ostream& Circle::print(std::ostream& out) const {
+	return out << this;
 }

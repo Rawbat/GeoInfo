@@ -82,11 +82,17 @@ void Application::createSurfaceOfString(std::string input) {
 			}
 		}
 
-
 		surfaces_m.push_back(new Circle(args[0], Point(args[1], args[2]), args[3]));
 	}
 }
 
+
 void Application::deleteSurfaceOfString(std::string input) {
 
+}
+
+void Application::printSurfaces() {
+	for (Surface *surface : surfaces_m) {
+		std::cout << *surface << std::endl;
+	}
 }

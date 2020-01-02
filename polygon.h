@@ -20,6 +20,9 @@ class Polygon : public Surface{
 
 		virtual double getArea() const;
 
+		friend std::ostream& operator<<(std::ostream& out, const Polygon& polygon);
+		std::ostream& print(std::ostream& out) const;
+
 		//Destructor
 		~Polygon();
 	private:
