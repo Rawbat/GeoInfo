@@ -21,3 +21,7 @@ void Circle::setRadius(int radius) {
 	radius_m = radius;
 }
 
+std::ostream& operator<<(std::ostream& out, const Circle& circle) {
+	out << "(" << circle.getCenter().getX() << ", " << circle.getCenter().getY() << ") " << circle.getRadius();
+	return out;
+}
