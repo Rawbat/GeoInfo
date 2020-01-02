@@ -1,4 +1,7 @@
 #include "polygon.h"
+#include "math.h"
+#include <cmath>
+#define _USE_MATH_DEFINES
 
 Polygon::Polygon(int id, std::vector<Point> points) {
 	if (points.size() <= 2) {
@@ -34,7 +37,17 @@ Polygon::Polygon(int id, std::vector<Line> edges) {
 
 double Polygon::getArea() const {
 	double area = 0;
-	//TODO calculate and return area
+	double fine_addition;
+	int x1, x2, y1, y2;
+	for (int i = 0; i < getEdges().size()-1; i++) {
+		x1 = edges_m[i].getPoints().first.getX();
+		x2 = edges_m[i+1].getPoints().first.getX();
+		y1 = edges_m[i].getPoints().first.getY();
+		y2 = edges_m[i+1].getPoints().first.getY();
+
+		fine_addition = std::abs(x1 * y2 - y1 * x2)/2;
+		area += fine_addition;
+	}
 	return area;
 }
 
