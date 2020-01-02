@@ -16,7 +16,8 @@ class Line {
 		std::pair<Point, Point> getPoints() const { return  points_m; }
 		
 		//Setter
-		void setPoints(std::pair<Point, Point> points);	
+		void setPoints(std::pair<Point, Point> points);
+		void setPoints(Point a, Point b); //overloaded meth
 
 		friend std::ostream& operator<<(std::ostream& out, const Line& line);
 
