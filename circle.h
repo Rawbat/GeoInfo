@@ -10,8 +10,8 @@ class Circle : public Surface {
 		Circle(Point center, int radius = 1);
 
 		//Getter
-		Point getCenter() { return center_m; }
-		int getRadius() { return radius_m; }
+		Point getCenter() const { return center_m; }
+		int getRadius() const { return radius_m; }
 
 		//Setter
 		void setCenter(int x, int y);

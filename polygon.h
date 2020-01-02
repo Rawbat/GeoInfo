@@ -13,7 +13,7 @@ class Polygon {
 		Polygon(std::vector<Line> edges);
 
 		//Getter
-		std::vector<Line> getEdges() { return edges_m; }
+		std::vector<Line> getEdges() const { return edges_m; }
 
 		//Setter
 		void setEdges(std::vector<Line> edges);

@@ -18,6 +18,11 @@ void Point::setY(int y) {
 	y_m = y;
 }
 
+std::ostream& operator<<(std::ostream& out, const Point& point) {
+	out << "(" << point.getX() << "|" << point.getY() << ")";
+	return out;
+}
+
 Point::~Point() {
 
 }

@@ -10,10 +10,10 @@ class circleSector : public Surface {
 		circleSector(Point center, int radius, double aperture, Point opening_point);
 
 		//Getter
-		Point getCenter() { return center_m; }
-		int getRadius() { return radius_m; }
-		double getAperture() { return aperture_m; }
-		Point getOpeningPoint() { return opening_point_m; }
+		Point getCenter() const { return center_m; }
+		int getRadius() const { return radius_m; }
+		double getAperture() const { return aperture_m; }
+		Point getOpeningPoint() const { return opening_point_m; }
 
 		//Setter
 		void setCenter();

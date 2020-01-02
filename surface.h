@@ -6,7 +6,7 @@ class Surface {
 		//Constructors
 		Surface();
 
-		virtual int getArea() = 0;
+		virtual int getArea() const = 0;
 	private:
 		int id_m;
 };

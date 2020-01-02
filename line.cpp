@@ -8,7 +8,6 @@ Line::Line() {
 
 Line::Line(Point a, Point b) {
 	points_m = std::make_pair(a, b);
-
 }
 
 Line::Line(std::pair<Point, Point> points) {
@@ -17,8 +16,12 @@ Line::Line(std::pair<Point, Point> points) {
 
 
 void Line::setPoints(std::pair<Point, Point> points) {
-	
 	points_m = points;
+}
+
+std::ostream& operator<<(std::ostream& out, const Line& line) {
+	out << line.getPoints().first << "-" << line.getPoints().second;
+	return out;
 }
 
 
