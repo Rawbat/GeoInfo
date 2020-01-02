@@ -3,6 +3,7 @@
 #include <string>
 #include "point.h"
 #include "circle.h"
+#include <fstream>
 
 #define CIRCLE_ARGS 4
 
@@ -31,6 +32,9 @@ void Application::run() {
 		}
 		else if (command.compare("printDetailed") == 0) {
 			printSurfacesDetailed();
+		}
+		else if (command.compare("read") == 0) {
+			read(input);
 		}
 		else if (command.compare("exit") == 0) {
 			quit_m = true;
@@ -121,6 +125,18 @@ bool Application::idExists(int id) {
 		}
 	}
 	return false;
+}
+
+void Application::read(std::string input) {
+	std::string file_path = cli_m.getNextWord(input);
+
+	std::cout << file_path << std::endl;
+
+	cli_m.printAdditionalArguments(input);
+}
+
+void Application::store(std::vector<Surface*> surfaces) {
+
 }
 
 

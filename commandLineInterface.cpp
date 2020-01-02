@@ -13,10 +13,28 @@ std::string CommandLineInterface::getNextWord(std::string &line) {
 		line = "";
 		return word;
 	}
-	int pos = line.find(" ");
+
+	int space_pos = line.find(" ");
+	int word_start = 0;
 	
-	std::string word = line.substr(0, pos);
-	line = line.substr(pos + 1);
+	std::string word;
+	if (line.find("'") != std::string::npos && line.find("'") < space_pos) {
+		if (line.find("'") != 0) {
+			std::cout << "Unexpected: " <<  "'" << std::endl;
+			return "";
+		}
+		if (line.find("'", 1) != std::string::npos && line.find("'", 1) > space_pos) {
+			word_start = line.find("'") + 1;
+			space_pos = line.find("'", 1) - 1;
+		}
+		else {
+			std::cout << "Missing: " << "'" << std::endl;
+			return "";
+		}
+	}
+
+	word = line.substr(word_start, space_pos);
+	line = line.substr(space_pos + 1);
 
 	return word;
 }
