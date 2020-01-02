@@ -3,24 +3,25 @@
 
 #include "surface.h"
 #include "point.h"
+#include "line.h"
 #include <vector>
 
 class Polygon {
 	public:
 		//Constructors
-		Polygon();
-		Polygon(std::vector<Point> points_m);
+		Polygon(std::vector<Point> points);
+		Polygon(std::vector<Line> edges);
 
 		//Getter
-		std::vector<Point> getPoints() { return points_m; }
+		std::vector<Line> getEdges() { return edges_m; }
 
 		//Setter
-		void setPoints(std::vector<Point> points);
+		void setEdges(std::vector<Line> edges);
 
 		//Destructor
 		~Polygon();
 	private:
-		std::vector<Point> points_m;
+		std::vector<Line> edges_m;
 };
 
 #endif

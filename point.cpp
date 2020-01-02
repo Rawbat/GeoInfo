@@ -1,7 +1,7 @@
 #include "point.h"
 
 Point::Point()
-	:x_m(0), y_m(0) {
+	: x_m(0), y_m(0) {
 
 }
 
@@ -11,13 +11,15 @@ Point::Point(int x, int y)
 }
 
 void Point::setX(int x) {
-
-	this->x_m = x;
+	x_m = x;
 }
 
 void Point::setY(int y) {
+	y_m = y;
+}
 
-	this->y_m = y;
+Point::~Point() {
+
 }
 
 

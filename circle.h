@@ -19,7 +19,7 @@ class Circle : public Surface {
 		void setRadius(int radius);
 
 		//Destructor
-		~Circle();
+		//~Circle();
 
 	private:
 		Point center_m;

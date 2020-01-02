@@ -22,7 +22,7 @@ class circleSector : public Surface {
 		void setOpeningPoint();
 
 		//Destructor
-		~circleSector();
+		//~circleSector();
 
 	private:
 		Point center_m;

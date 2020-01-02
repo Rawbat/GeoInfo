@@ -18,7 +18,7 @@ class Line {
 		void setPoints(std::pair<Point, Point> points);	
 
 		//Destructor
-		~Line();
+		//~Line();
 	private:
 		std::pair<Point, Point> points_m;
 };
