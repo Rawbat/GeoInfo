@@ -44,7 +44,7 @@ std::ostream& operator<<(std::ostream& out, const Polygon& polygon) {
 }
 
 std::ostream& Polygon::print(std::ostream& out) const {
-	return out << this;
+	return out << *this;
 }
 
 Polygon::~Polygon() {

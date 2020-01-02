@@ -35,5 +35,5 @@ std::ostream& operator<<(std::ostream& out, const Circle& circle) {
 }
 
 std::ostream& Circle::print(std::ostream& out) const {
-	return out << this;
+	return out << *this;
 }

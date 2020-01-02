@@ -12,6 +12,7 @@ Application::Application() {
 
 void Application::run() {
 	while (!quit_m) {
+		std::cout << ">> ";
 		std::string input = cli_m.getInput();
 
 		std::string command = cli_m.getNextWord(input);
@@ -24,6 +25,15 @@ void Application::run() {
 		}
 		else if (command.compare("delete") == 0) {
 			deleteSurfaceOfString(input);
+		}
+		else if (command.compare("print") == 0) {
+			printSurfaces();
+		}
+		else if (command.compare("") == 0) {
+			
+		}
+		else {
+			std::cout << "[ERROR] Command not found: " << "'" << command << "'" << std::endl;
 		}
 		
 

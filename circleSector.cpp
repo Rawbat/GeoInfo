@@ -6,5 +6,5 @@ std::ostream& operator<<(std::ostream& out, const CircleSector& circleSector) {
 }
 
 std::ostream& CircleSector::print(std::ostream& out) const {
-	return out << this;
+	return out << *this;
 }
