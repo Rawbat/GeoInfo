@@ -6,17 +6,19 @@
 #include "line.h"
 #include <vector>
 
-class Polygon {
+class Polygon : public Surface{
 	public:
 		//Constructors
-		Polygon(std::vector<Point> points);
-		Polygon(std::vector<Line> edges);
+		Polygon(int id, std::vector<Point> points);
+		Polygon(int id, std::vector<Line> edges);
 
 		//Getter
 		std::vector<Line> getEdges() const { return edges_m; }
 
 		//Setter
 		void setEdges(std::vector<Line> edges);
+
+		virtual double getArea() const;
 
 		//Destructor
 		~Polygon();

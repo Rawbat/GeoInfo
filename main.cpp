@@ -24,7 +24,7 @@ int main() {
 	std::cin >> temp;
 
 	*/
-	Circle Kreis = Circle(Point(2, 4), 1);
+	Circle Kreis = Circle(5, Point(2, 4), 1);
 
 	
 	Application application;

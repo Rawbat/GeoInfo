@@ -2,9 +2,10 @@
 #include "circle.h"
 
 
-Circle::Circle(Point center, int radius) {
+Circle::Circle(int id, Point center, int radius) {
 	center_m = center;
 	radius_m = radius;
+	id_m = id;
 }
 
 

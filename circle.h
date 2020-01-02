@@ -7,7 +7,7 @@
 class Circle : public Surface {
 	public:
 		//Contructors
-		Circle(Point center, int radius = 1);
+		Circle(int id, Point center, int radius = 1);
 
 		//Getter
 		Point getCenter() const { return center_m; }

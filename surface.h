@@ -7,7 +7,8 @@ class Surface {
 		//Surface();
 
 		virtual double getArea() const = 0;
-	private:
+		int getId() const { return id_m; }
+	protected:
 		int id_m;
 };
 

@@ -7,7 +7,7 @@
 class CircleSector : public Surface {
 	public:
 		//Constructors
-		CircleSector(Point center, int radius, double aperture, Point opening_point);
+		CircleSector(int id, Point center, int radius, double aperture, Point opening_point);
 
 		//Getter
 		Point getCenter() const { return center_m; }

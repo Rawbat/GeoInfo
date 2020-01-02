@@ -1,6 +1,6 @@
 #include "polygon.h"
 
-Polygon::Polygon(std::vector<Point> points) {
+Polygon::Polygon(int id, std::vector<Point> points) {
 	if (points.size() <= 2) {
 		//Throw invalid number of points exception
 	}
@@ -13,16 +13,27 @@ Polygon::Polygon(std::vector<Point> points) {
 			edges_m.push_back(Line(*last_point, point));
 		}
 	}
+
+	id_m = id;
+
 	//TODO check for intersections
 }
 
-Polygon::Polygon(std::vector<Line> edges) {
+Polygon::Polygon(int id, std::vector<Line> edges) {
 	if (edges.size() <= 2) {
 		//Throw invalid number of points exception
 	}
 	edges_m = edges;
 
+	id_m = id;
+
 	//TODO check for intersections
+}
+
+double Polygon::getArea() const {
+	double area = 0;
+	//TODO calculate and return area
+	return area;
 }
 
 Polygon::~Polygon() {

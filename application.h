@@ -15,6 +15,8 @@ class Application {
 		void store();
 		void read();
 		void deleteSurface(Surface *surface);
+		void createSurfaceOfString(std::string input);
+		void deleteSurfaceOfString(std::string input);
 
 		CommandLineInterface cli_m;
 

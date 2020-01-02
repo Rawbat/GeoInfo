@@ -20,3 +20,7 @@ std::string CommandLineInterface::getNextWord(std::string &line) {
 
 	return word;
 }
+
+void CommandLineInterface::printHelpMessage() {
+
+}

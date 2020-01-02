@@ -7,6 +7,7 @@ class CommandLineInterface {
 	public:
 		std::string getInput();
 		std::string getNextWord(std::string &line);
+		void printHelpMessage();
 	private:
 };
 
