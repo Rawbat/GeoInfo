@@ -18,7 +18,7 @@ void Application::run() {
 		std::string command = cli_m.getNextWord(input);
 
 		if (command.compare("help") == 0) {
-			cli_m.printHelpMessage();
+			cli_m.handleHelpMessage(input);
 		}
 		else if (command.compare("new") == 0) {
 			createSurfaceOfString(input);
@@ -29,21 +29,20 @@ void Application::run() {
 		else if (command.compare("print") == 0) {
 			printSurfaces();
 		}
+		else if (command.compare("printDetailed") == 0) {
+			printSurfacesDetailed();
+		}
+		else if (command.compare("exit") == 0) {
+			quit_m = true;
+		}
 		else if (command.compare("") == 0) {
 			
 		}
 		else {
 			std::cout << "[ERROR] Command not found: " << "'" << command << "'" << std::endl;
 		}
-		
-
-		/*try {
-			command_handler_m.handle(input);
-		}
-		catch (std::exception &e) {
-
-		}*/
 	}
+	std::cout << "Goodbye!" << std::endl;
 }
 
 void Application::createSurfaceOfString(std::string input) {
@@ -54,7 +53,7 @@ void Application::createSurfaceOfString(std::string input) {
 		for (int i = 0; i < CIRCLE_ARGS; i++) {
 			std::string arg_string = cli_m.getNextWord(input);
 			if (arg_string.compare("") == 0) {
-				std::cout << "[Error] Too few arguments." << std::endl;
+				std::cout << "[ERROR] Too few arguments." << std::endl;
 				return;
 			}
 			else {
@@ -62,35 +61,25 @@ void Application::createSurfaceOfString(std::string input) {
 					args[i] = std::stoi(arg_string);
 				}
 				catch (std::invalid_argument const &e) {
-					std::cout << "[Error] Invalid argument: " << "'" << arg_string << "'." << " Expected Integer" << std::endl;
+					std::cout << "[ERROR] Invalid argument: " << "'" << arg_string << "'." << " Expected Integer" << std::endl;
 					return;
 				}
 				catch (std::out_of_range const &e) {
-					std::cout << "[Error] Number too big: " << "'" << arg_string << "'" << std::endl;
+					std::cout << "[ERROR] Number too big: " << "'" << arg_string << "'" << std::endl;
 					return;
 				}
 			}
 		}
 
 		//Check if the user added more arguments than neccessary
-		std::string additional_arg = cli_m.getNextWord(input);
-		if (additional_arg.compare("") != 0) {
-			std::cout << "[Warning] Following arguments have not been used: ";
+		
+		cli_m.printAdditionalArguments(input);
 
-			while (additional_arg.compare("") != 0) {
-				std::cout << "'" << additional_arg << "'" << " ";
-				additional_arg = cli_m.getNextWord(input);
-			}
-
-			std::cout << std::endl;
+		if (idExists(args[0])) {
+			return;
 		}
 
-		for (Surface *surface : surfaces_m) {
-			if (surface->getId() == args[0]) {
-				std::cout << "[Error] Id already existing: " << "'" << args[0] << "'" << std::endl;
-				return;
-			}
-		}
+		
 
 		surfaces_m.push_back(new Circle(args[0], Point(args[1], args[2]), args[3]));
 	}
@@ -98,10 +87,50 @@ void Application::createSurfaceOfString(std::string input) {
 
 
 void Application::deleteSurfaceOfString(std::string input) {
+	std::string id_string = cli_m.getNextWord(input);
+	int id;
 
+	try {
+		id = std::stoi(id_string);
+	}
+	catch (std::invalid_argument const &e) {
+		std::cout << "[ERROR] Invalid argument: " << "'" << id_string << "'." << " Expected Integer" << std::endl;
+		return;
+	}
+	catch (std::out_of_range const &e) {
+		std::cout << "[ERROR] Number too big: " << "'" << id_string << "'" << std::endl;
+		return;
+	}
+
+	for (std::vector<Surface*>::iterator it = surfaces_m.begin(); it != surfaces_m.end(); it++) {
+		if ((*it)->getId() == id) {
+			std::cout << "Following surface has been deleted:" << std::endl << **it << std::endl;
+			delete *it;
+			surfaces_m.erase(it);
+			return;
+		}
+	}
+	std::cout << "[ERROR] ID does not exist: " << "'" << id << "'" << std::endl;
 }
 
+bool Application::idExists(int id) {
+	for (Surface *surface : surfaces_m) {
+		if (surface->getId() == id) {
+			std::cout << "[ERROR] ID already existing: " << "'" << id << "'" << std::endl;
+			return true;
+		}
+	}
+	return false;
+}
+
+
 void Application::printSurfaces() {
+	for (Surface *surface : surfaces_m) {
+		std::cout << surface->getName() << " " << surface->getId() << std::endl;
+	}
+}
+
+void Application::printSurfacesDetailed() {
 	for (Surface *surface : surfaces_m) {
 		std::cout << *surface << std::endl;
 	}

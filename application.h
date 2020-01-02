@@ -18,7 +18,11 @@ class Application {
 		void createSurfaceOfString(std::string input);
 		void deleteSurfaceOfString(std::string input);
 
+		bool idExists(int id);
+
 		void printSurfaces();
+		void printSurfacesDetailed();
+		
 
 		CommandLineInterface cli_m;
 
