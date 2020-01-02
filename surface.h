@@ -8,6 +8,7 @@ class Surface {
 
 		virtual int getArea() = 0;
 	private:
+		int id_m;
 };
 
 #endif
