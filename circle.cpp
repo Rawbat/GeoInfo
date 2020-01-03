@@ -31,6 +31,18 @@ double Circle::getArea() const {
 	return area;
 }
 
+std::string Circle::prettyString() const{
+	std::string return_string;
+
+	return_string = "ID: " + std::to_string(getId()) + "";
+	return_string += "\nType: " + getName();
+	return_string += "\nArea: " + std::to_string(getArea());
+	return_string += "\nCenter: (" + std::to_string(getCenter().getX()) + ", " + std::to_string(getCenter().getY()) + ")";
+	return_string += "\nRadius: " + std::to_string(getRadius());
+
+	return return_string;
+}
+
 std::ostream& operator<<(std::ostream& out, const Circle& circle) {
 	out << circle.getName() << " " << circle.getId() << " " << "(" << circle.getCenter().getX() << ", " << circle.getCenter().getY() << ") " << circle.getRadius();
 	return out;

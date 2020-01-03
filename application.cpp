@@ -33,11 +33,14 @@ void Application::run() {
 		else if (command.compare("delete") == 0) {
 			deleteSurfaceOfString(input);
 		}
-		else if (command.compare("print") == 0) {
-			printSurfaces();
+		else if (command.compare("sort") == 0) {
+
 		}
-		else if (command.compare("printdetailed") == 0) {
-			printSurfacesDetailed();
+		else if (command.compare("select") == 0) {
+
+		}
+		else if (command.compare("print") == 0) {
+			printSurfaces(input);
 		}
 		else if (command.compare("read") == 0) {
 			read(input);
@@ -113,30 +116,33 @@ void Application::createSurfaceOfString(std::string input) {
 
 	if (!idExists(id)) {
 		if (type.compare("circle") == 0) {
-			surfaces_m.push_back(new Circle(id, Point(args.at(1), args.at(2)), args.at(3)));
+			Circle* temp_circle = new Circle(id, Point(args.at(1), args.at(2)), args.at(3));
+			surfaces_m.push_back(temp_circle);
+			selected_surfaces_m.push_back(temp_circle);
 		}
 		else if (type.compare("sector") == 0) {
-			surfaces_m.push_back(new CircleSector(id, Point(args.at(1), args.at(2)), args.at(3), Point(args.at(4), args.at(5)), args.at(6)));
+			CircleSector* temp_sector = new CircleSector(id, Point(args.at(1), args.at(2)), args.at(3), Point(args.at(4), args.at(5)), args.at(6));
+			surfaces_m.push_back(temp_sector);
+			selected_surfaces_m.push_back(temp_sector);
 		}
 		else if (type.compare("polygon") == 0) {
 			std::vector<Point> points;
 			for (int i = 1; i < args.size() - 1; i += 2) {
 				points.push_back(Point(args.at(i), args.at(i + 1)));
 			}
-			surfaces_m.push_back(new Polygon(id, points));
+			Polygon* temp_polygon = new Polygon(id, points);
+			surfaces_m.push_back(temp_polygon);
+			selected_surfaces_m.push_back(temp_polygon);
 		}
 	}
-
-	
-
-	
-		
-
 }
 
 void Application::standardizeInputString(std::string& input) {
-	int c = 0;
 
+	//Convert everything to lowercase
+	cli_m.toLower(input);
+
+	unsigned int c = 0;
 	while(c < input.size()) {
 		//Remove additional spaces
 		if (c < input.size() - 1 && input.at(c) == ' ' && input.at(c + 1) == ' ') {
@@ -161,10 +167,6 @@ void Application::standardizeInputString(std::string& input) {
 			if (c > 0) {
 				c--;
 			}
-		}
-		//Convert everything to lowercase
-		else if (input.at(c) >= 'A' && input.at(c) <= 'Z') {
-			input.replace(c, 1, std::string(1, static_cast<char>(input.at(c) - ('A' - 'a'))));
 		}
 		else {
 			c++;
@@ -193,9 +195,10 @@ void Application::deleteSurfaceOfString(std::string input) {
 
 	for (std::vector<Surface*>::iterator it = surfaces_m.begin(); it != surfaces_m.end(); it++) {
 		if ((*it)->getId() == id) {
-			std::cout << "Following surface has been deleted:" << std::endl << **it << std::endl;
+			std::cout << "Following surface has been deleted:" << std::endl << (**it).prettyString() << std::endl;
 			delete *it;
 			surfaces_m.erase(it);
+			selected_surfaces_m = surfaces_m; //TODO when deleting a surface currently all remaing surfaces get selected
 			return;
 		}
 	}
@@ -255,20 +258,51 @@ void Application::store(std::vector<Surface*> surfaces, std::string input) {
 		file.close();
 	}
 	else {
-		std::cout <<  "[ERROR] Could not open file at relative path: " << file_path << std::endl;
+		std::cout << "[ERROR] Could not open file at relative path: " << file_path << std::endl;
 	}
 	cli_m.printAdditionalArguments(input);
 }
 
+void Application::selectSurfaces(std::string input) {
+	std::string type = cli_m.getNextWord(input);
 
-void Application::printSurfaces() {
+	if (type.compare("circle") == 0) {
+		
+	}
+	else if (type.compare("sector") == 0) {
+		
+	}
+	else if (type.compare("polygon") == 0) {
+		
+	}
+	else {
+		std::cout << "[ERROR] Unknown surface type: " << type << std::endl;
+		return;
+	}
+
+}
+
+void Application::sortSurfaces(std::string input) {
+
+}
+
+void Application::printSurfaces(std::string input) {
+	std::string mode = cli_m.getNextWord(input);
+
+	if (mode.compare("detailed") == 0) {
+		printSurfacesDetailed();
+		return;
+	}
+
 	for (Surface *surface : surfaces_m) {
 		std::cout << surface->getName() << " " << surface->getId() << std::endl;
 	}
 }
 
 void Application::printSurfacesDetailed() {
+	std::cout << "-----------------------------------" << std::endl;
 	for (Surface *surface : surfaces_m) {
-		std::cout << *surface << std::endl;
+		std::cout << surface->prettyString() << std::endl;
+		std::cout << "-----------------------------------" << std::endl;
 	}
 }

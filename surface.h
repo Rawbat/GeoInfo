@@ -9,6 +9,8 @@ class Surface {
 		//Surface();
 
 		virtual double getArea() const = 0;
+		virtual std::string prettyString() const = 0;
+
 		int getId() const { return id_m; }
 		std::string getName() const { return name_m; }
 		void setName(std::string name);
@@ -21,6 +23,7 @@ class Surface {
 
 	private:
 		virtual std::ostream& print(std::ostream& out) const = 0;
+		
 };
 
 #endif

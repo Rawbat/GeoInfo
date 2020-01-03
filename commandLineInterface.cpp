@@ -39,6 +39,15 @@ std::string CommandLineInterface::getNextWord(std::string &line) {
 	return word;
 }
 
+void CommandLineInterface::toLower(std::string& input) {
+	for (unsigned int c = 0; c < input.size(); c++)
+	{
+		if (input.at(c) >= 'A' && input.at(c) <= 'Z') {
+			input.replace(c, 1, std::string(1, static_cast<char>(input.at(c) - ('A' - 'a'))));
+		}
+	}
+}
+
 void CommandLineInterface::handleHelpMessage(std::string input) {
 	std::string additional_arg = getNextWord(input);
 	if (additional_arg.compare("") == 0) {

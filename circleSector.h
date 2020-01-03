@@ -16,6 +16,7 @@ class CircleSector : public Surface {
 		Point getOpeningPoint() const { return opening_point_m; }
 		virtual double getArea() const;
 
+
 		//Setter
 		void setCenter(Point center);
 		void setCenter(double x, double y);
@@ -24,6 +25,7 @@ class CircleSector : public Surface {
 		void setOpeningPoint(Point opening_point);
 		void setOpeningPoint(double x, double y);
 
+		std::string prettyString() const;
 		friend std::ostream& operator<<(std::ostream& out, const CircleSector& circleSector);
 		std::ostream& print(std::ostream& out) const;
 

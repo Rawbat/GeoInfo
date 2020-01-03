@@ -20,6 +20,7 @@ class Polygon : public Surface{
 
 		virtual double getArea() const;
 
+		std::string prettyString() const;
 		friend std::ostream& operator<<(std::ostream& out, const Polygon& polygon);
 		std::ostream& print(std::ostream& out) const;
 

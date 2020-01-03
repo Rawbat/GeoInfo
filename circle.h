@@ -20,6 +20,8 @@ class Circle : public Surface {
 
 		virtual double getArea() const;
 
+		std::string prettyString() const;
+
 		//Destructor
 		//~Circle();
 		friend std::ostream& operator<<(std::ostream& out, const Circle& circle);

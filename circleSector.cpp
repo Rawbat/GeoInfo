@@ -11,6 +11,20 @@ CircleSector::CircleSector(int id, Point center, double radius, Point opening_po
 	setName("SECTOR");
 }
 
+std::string CircleSector::prettyString() const {
+	std::string return_string;
+
+	return_string = "ID: " + std::to_string(getId()) + "";
+	return_string += "\nType: " + getName();
+	return_string += "\nArea: " + std::to_string(getArea());
+	return_string += "\nCenter: (" + std::to_string(getCenter().getX()) + ", " + std::to_string(getCenter().getY()) + ")";
+	return_string += "\nRadius: " + std::to_string(getRadius());
+	return_string += "\nOpening Point: (" + std::to_string(getOpeningPoint().getX()) + ", " + std::to_string(getOpeningPoint().getY()) + ")";
+	return_string += "\nRadius: " + std::to_string(getAperture());
+
+	return return_string;
+}
+
 std::ostream& operator<<(std::ostream& out, const CircleSector& circleSector) {
 	out << circleSector.getName() << " " << circleSector.getId() << " (" << circleSector.getCenter().getX() << ", " << circleSector.getCenter().getY() << ") "
 		<< circleSector.getRadius() << " (" << circleSector.getOpeningPoint().getX() << ", " << circleSector.getOpeningPoint().getY() << ") " << circleSector.getAperture();
