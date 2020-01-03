@@ -7,16 +7,16 @@
 class Circle : public Surface {
 	public:
 		//Contructors
-		Circle(int id, Point center, int radius = 1);
+		Circle(int id, Point center, double radius = 1);
 
 		//Getter
 		Point getCenter() const { return center_m; }
-		int getRadius() const { return radius_m; }
+		double getRadius() const { return radius_m; }
 
 		//Setter
-		void setCenter(int x, int y);
+		void setCenter(double x, double y);
 		void setCenter(Point center);
-		void setRadius(int radius);
+		void setRadius(double radius);
 
 		virtual double getArea() const;
 
@@ -26,7 +26,7 @@ class Circle : public Surface {
 		std::ostream& print(std::ostream& out) const;
 	private:
 		Point center_m;
-		int radius_m;
+		double radius_m;
 
 		
 

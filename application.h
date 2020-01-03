@@ -17,6 +17,7 @@ class Application {
 		void deleteSurface(Surface *surface);
 		void createSurfaceOfString(std::string input);
 		void deleteSurfaceOfString(std::string input);
+		void standardizeInputString(std::string& input);
 
 
 		bool idExists(int id);

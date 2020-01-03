@@ -8,17 +8,13 @@ Polygon::Polygon(int id, std::vector<Point> points) {
 		//Throw invalid number of points exception
 	}
 	Point *last_point = nullptr;
-	for (Point point : points) {
-		if (last_point == nullptr) {
-			last_point = &point;
-		}
-		else {
-			edges_m.push_back(Line(*last_point, point));
-		}
+
+	for (int p = 0; p < points.size() - 1; p++) {
+		edges_m.push_back(Line(points.at(p), points.at(p + 1)));
 	}
 
 	id_m = id;
-	setName("polygon");
+	setName("POLYGON");
 
 	//TODO check for intersections
 }
@@ -30,7 +26,7 @@ Polygon::Polygon(int id, std::vector<Line> edges) {
 	edges_m = edges;
 
 	id_m = id;
-	setName("polygon");
+	setName("POLYGON");
 
 	//TODO check for intersections
 }
@@ -54,6 +50,14 @@ double Polygon::getArea() const {
 
 std::ostream& operator<<(std::ostream& out, const Polygon& polygon) {
 	out << polygon.getName() << " " << polygon.getId();
+	
+	std::vector<Line> edges = polygon.getEdges();
+	//Print first point of all edges
+	for (Line edge : edges) {
+		out << " (" << edge.getPoints().first.getX() << ", " << edge.getPoints().first.getY() << ")";
+	}
+	//Print second point of last edge
+	out << " (" << edges.at(edges.size() - 1).getPoints().second.getX() << ", " << edges.at(edges.size() - 1).getPoints().second.getY() << ")";
 	return out;
 }
 

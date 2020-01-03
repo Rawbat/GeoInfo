@@ -8,15 +8,15 @@ class Point {
 
 		//Constructors
 		Point();
-		Point(int x, int y);
+		Point(double x, double y);
 
 		//Getter
-		int getX() const { return x_m; }
-		int getY() const { return y_m; }
+		double getX() const { return x_m; }
+		double getY() const { return y_m; }
 
 		//Setter
-		void setX(int x);
-		void setY(int y);
+		void setX(double x);
+		void setY(double y);
 
 		//Overloaded Operators
 		friend std::ostream& operator<<(std::ostream& out, const Point& point);
@@ -24,8 +24,8 @@ class Point {
 		//Destructor
 		~Point();
 	private:
-		int x_m;
-		int y_m;
+		double x_m;
+		double y_m;
 };
 
 #endif

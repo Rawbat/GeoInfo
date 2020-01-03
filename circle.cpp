@@ -4,16 +4,16 @@
 #include <math.h>
 #include <cmath>
 
-Circle::Circle(int id, Point center, int radius) {
+Circle::Circle(int id, Point center, double radius) {
 	center_m = center;
 	radius_m = radius;
 	id_m = id;
-	setName("circle");
+	setName("CIRCLE");
 }
 
 
 //Setter
-void Circle::setCenter(int x, int y) {
+void Circle::setCenter(double x, double y) {
 	center_m = Point(x, y);
 }
 
@@ -21,7 +21,7 @@ void Circle::setCenter(Point center) {
 	center_m = center;
 }
 
-void Circle::setRadius(int radius) {
+void Circle::setRadius(double radius) {
 	radius_m = radius;
 }
 

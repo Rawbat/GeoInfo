@@ -9,6 +9,7 @@ class CommandLineInterface {
 		std::string getNextWord(std::string &line);
 		void printAdditionalArguments(std::string input);
 		void handleHelpMessage(std::string input);
+
 	private:
 		const char* GENERAL_HELP_MESSAGE = "Acceptable commands are:\n -new\n -delete\n -print\n -exit\nFor detailed help type 'help COMMAND_NAME'.";
 		const char* NEW_HELP_MESSAGE = "new SURFACE_NAME ID REST_ARGUMENTS\nThe new command adds a new surface of a given type. The user is able to choose all values including the id.";

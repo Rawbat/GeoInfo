@@ -5,16 +5,16 @@ Point::Point()
 
 }
 
-Point::Point(int x, int y)
+Point::Point(double x, double y)
 	: x_m(x), y_m(y) {
 
 }
 
-void Point::setX(int x) {
+void Point::setX(double x) {
 	x_m = x;
 }
 
-void Point::setY(int y) {
+void Point::setY(double y) {
 	y_m = y;
 }
 
