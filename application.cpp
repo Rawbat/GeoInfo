@@ -302,12 +302,41 @@ void Application::printSurfaces(std::string input) {
 
 	if (mode.compare("detailed") == 0) {
 		printSurfacesDetailed();
+	}
+	else if (mode.compare("") == 0) {
+		for (Surface *surface : surfaces_m) {
+			std::cout << surface->getName() << " " << surface->getId() << std::endl;
+		}
+	}
+	else {
+		printSingleSurface(mode);
+	}
+
+	
+}
+
+void Application::printSingleSurface(std::string input) {
+	int id = 0;
+
+	try {
+		id = std::stoi(input);
+	}
+	catch (std::invalid_argument const &e) {
+		std::cout << "[ERROR] Invalid argument: " << "'" << input << "'." << " Expected Integer" << std::endl;
+		return;
+	}
+	catch (std::out_of_range const &e) {
+		std::cout << "[ERROR] Number too big: " << "'" << input << "'" << std::endl;
 		return;
 	}
 
 	for (Surface *surface : surfaces_m) {
-		std::cout << surface->getName() << " " << surface->getId() << std::endl;
+		if (id == surface->getId()) {
+			std::cout << surface->prettyString() << std::endl;
+			return;
+		}
 	}
+	std::cout << "[ERROR] ID does not exist: " << "'" << id << "'" << std::endl;
 }
 
 void Application::printSurfacesDetailed() {

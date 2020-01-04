@@ -26,6 +26,7 @@ class Application {
 		bool idExists(int id);
 
 		void printSurfaces(std::string input);
+		void printSingleSurface(std::string input);
 		void printSurfacesDetailed();
 		
 
