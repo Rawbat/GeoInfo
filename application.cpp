@@ -278,6 +278,13 @@ void Application::store(std::vector<Surface*> surfaces, std::string input) {
 void Application::selectSurfaces(std::string input) {
 	std::string type = cli_m.getNextWord(input);
 
+	for (std::vector<Surface*>::iterator it = selected_surfaces_m.begin(); it != selected_surfaces_m.end(); it++) {
+		if (type.compare(cli_m.toLower((*it)->getName())) == 0) {
+			selected_surfaces_m.erase(it);
+			it--;
+		}
+	}
+
 	if (type.compare("circle") == 0) {
 		
 	}
