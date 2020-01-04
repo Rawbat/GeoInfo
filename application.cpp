@@ -85,7 +85,6 @@ void Application::createSurfaceOfString(std::string input) {
 		std::string arg_string = cli_m.getNextWord(input);
 		if (arg_string.compare("") == 0) {
 			//Because a polygon theortically is able to have infinite edges an exception has to be made for this cause
-			//TODO check if the last point contains both x and y coordinates in a polygon
 			if (type.compare("polygon") == 0) {
 				if ((i % 2) == 0) {
 					std::cout << "[ERROR] Last point in polygon is missing y argument." << std::endl;
@@ -139,6 +138,7 @@ void Application::createSurfaceOfString(std::string input) {
 				surfaces_m.push_back(temp_polygon);
 				selected_surfaces_m.push_back(temp_polygon);
 			}
+			selected_surfaces_m = surfaces_m;
 		}
 	}
 	catch (std::invalid_argument& e) {
