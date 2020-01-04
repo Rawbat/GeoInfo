@@ -15,6 +15,11 @@ class Surface {
 		std::string getName() const { return name_m; }
 		void setName(std::string name);
 
+		//added overloaded compare operators for sorting
+		bool operator==(const Surface& other) const;
+		bool operator>(const Surface& other) const;
+		bool operator<(const Surface& other) const;
+
 		friend std::ostream& operator<<(std::ostream& out, const Surface& surface);
 		
 	protected:

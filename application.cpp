@@ -6,6 +6,7 @@
 #include <fstream>
 #include "circleSector.h"
 #include "polygon.h"
+#include <algorithm>
 
 #define CIRCLE_ARGS 4
 #define SECTOR_ARGS 7
@@ -294,7 +295,19 @@ void Application::selectSurfaces(std::string input) {
 }
 
 void Application::sortSurfaces(std::string input) {
-
+	std::string type;
+	type = cli_m.getNextWord(input);
+	if (type.compare("ascending") == 0) {
+		//ascending
+		std::sort(selected_surfaces_m.begin(), selected_surfaces_m.end());
+	}
+	else if (type.compare("descending") == 0) {
+		//descending
+		std::sort(selected_surfaces_m.rbegin(), selected_surfaces_m.rend());
+	}
+	else {
+		std::cout << "[ERROR] Unknown sort argument: " << type << std::endl;
+	}
 }
 
 void Application::printSurfaces(std::string input) {
