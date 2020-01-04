@@ -279,28 +279,13 @@ void Application::selectSurfaces(std::string input) {
 	std::string type = cli_m.getNextWord(input);
 
 	for (std::vector<Surface*>::iterator it = selected_surfaces_m.begin(); it != selected_surfaces_m.end(); it++) {
-		std::string temp_string = (*it)->getName();
-		cli_m.toLower(temp_string);
-		if (type.compare(temp_string) == 0) {
+		std::string temp_name = (*it)->getName();
+		cli_m.toLower(temp_name);
+		if (type.compare(temp_name) == 0) {
 			selected_surfaces_m.erase(it);
 			it--;
 		}
 	}
-
-	if (type.compare("circle") == 0) {
-		
-	}
-	else if (type.compare("sector") == 0) {
-		
-	}
-	else if (type.compare("polygon") == 0) {
-		
-	}
-	else {
-		std::cout << "[ERROR] Unknown surface type: " << type << std::endl;
-		return;
-	}
-
 }
 
 void Application::sortSurfaces(std::string input) {
