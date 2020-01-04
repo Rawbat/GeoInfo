@@ -279,7 +279,9 @@ void Application::selectSurfaces(std::string input) {
 	std::string type = cli_m.getNextWord(input);
 
 	for (std::vector<Surface*>::iterator it = selected_surfaces_m.begin(); it != selected_surfaces_m.end(); it++) {
-		if (type.compare(cli_m.toLower((*it)->getName())) == 0) {
+		std::string temp_string = (*it)->getName();
+		cli_m.toLower(temp_string);
+		if (type.compare(temp_string) == 0) {
 			selected_surfaces_m.erase(it);
 			it--;
 		}
