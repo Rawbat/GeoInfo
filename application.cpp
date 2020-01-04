@@ -87,6 +87,10 @@ void Application::createSurfaceOfString(std::string input) {
 			//Because a polygon theortically is able to have infinite edges an exception has to be made for this cause
 			//TODO check if the last point contains both x and y coordinates in a polygon
 			if (type.compare("polygon") == 0) {
+				if ((i % 2) == 0) {
+					std::cout << "[ERROR] Last point in polygon is missing y argument." << std::endl;
+					return;
+				}
 				break;
 			}
 			else {
@@ -114,27 +118,34 @@ void Application::createSurfaceOfString(std::string input) {
 
 	int id = static_cast<int>(args.at(0));
 
-	if (!idExists(id)) {
-		if (type.compare("circle") == 0) {
-			Circle* temp_circle = new Circle(id, Point(args.at(1), args.at(2)), args.at(3));
-			surfaces_m.push_back(temp_circle);
-			selected_surfaces_m.push_back(temp_circle);
-		}
-		else if (type.compare("sector") == 0) {
-			CircleSector* temp_sector = new CircleSector(id, Point(args.at(1), args.at(2)), args.at(3), Point(args.at(4), args.at(5)), args.at(6));
-			surfaces_m.push_back(temp_sector);
-			selected_surfaces_m.push_back(temp_sector);
-		}
-		else if (type.compare("polygon") == 0) {
-			std::vector<Point> points;
-			for (int i = 1; i < args.size() - 1; i += 2) {
-				points.push_back(Point(args.at(i), args.at(i + 1)));
+	try {
+		if (!idExists(id)) {
+			if (type.compare("circle") == 0) {
+				Circle* temp_circle = new Circle(id, Point(args.at(1), args.at(2)), args.at(3));
+				surfaces_m.push_back(temp_circle);
+				selected_surfaces_m.push_back(temp_circle);
 			}
-			Polygon* temp_polygon = new Polygon(id, points);
-			surfaces_m.push_back(temp_polygon);
-			selected_surfaces_m.push_back(temp_polygon);
+			else if (type.compare("sector") == 0) {
+				CircleSector* temp_sector = new CircleSector(id, Point(args.at(1), args.at(2)), args.at(3), Point(args.at(4), args.at(5)), args.at(6));
+				surfaces_m.push_back(temp_sector);
+				selected_surfaces_m.push_back(temp_sector);
+			}
+			else if (type.compare("polygon") == 0) {
+				std::vector<Point> points;
+				for (int i = 1; i < args.size() - 1; i += 2) {
+					points.push_back(Point(args.at(i), args.at(i + 1)));
+				}
+				Polygon* temp_polygon = new Polygon(id, points);
+				surfaces_m.push_back(temp_polygon);
+				selected_surfaces_m.push_back(temp_polygon);
+			}
 		}
 	}
+	catch (std::invalid_argument& e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	
 }
 
 void Application::standardizeInputString(std::string& input) {
@@ -195,7 +206,7 @@ void Application::deleteSurfaceOfString(std::string input) {
 
 	for (std::vector<Surface*>::iterator it = surfaces_m.begin(); it != surfaces_m.end(); it++) {
 		if ((*it)->getId() == id) {
-			std::cout << "Following surface has been deleted:" << std::endl << (**it).prettyString() << std::endl;
+			std::cout << "Following surface has been deleted:" << std::endl << (*it)->prettyString() << std::endl;
 			delete *it;
 			surfaces_m.erase(it);
 			selected_surfaces_m = surfaces_m; //TODO when deleting a surface currently all remaing surfaces get selected

@@ -5,9 +5,8 @@
 
 Polygon::Polygon(int id, std::vector<Point> points) {
 	if (points.size() <= 2) {
-		//Throw invalid number of points exception
+		throw std::invalid_argument("[Error] Too few points in polygon: " + std::to_string(points.size()) + "; 3 required");
 	}
-	Point *last_point = nullptr;
 
 	for (unsigned int p = 0; p < points.size() - 1; p++) {
 		edges_m.push_back(Line(points.at(p), points.at(p + 1)));
@@ -21,7 +20,7 @@ Polygon::Polygon(int id, std::vector<Point> points) {
 
 Polygon::Polygon(int id, std::vector<Line> edges) {
 	if (edges.size() <= 2) {
-		//Throw invalid number of points exception
+		throw std::invalid_argument("[Error] Too few edges in polygon: " + std::to_string(edges.size()) + "; 3 required");
 	}
 	edges_m = edges;
 
