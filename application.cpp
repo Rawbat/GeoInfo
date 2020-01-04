@@ -38,7 +38,7 @@ void Application::run() {
 			sortSurfaces(input);
 		}
 		else if (command.compare("select") == 0) {
-
+			selectSurfaces(input);
 		}
 		else if (command.compare("print") == 0) {
 			printSurfaces(input);
@@ -277,13 +277,16 @@ void Application::store(std::vector<Surface*> surfaces, std::string input) {
 
 void Application::selectSurfaces(std::string input) {
 	std::string type = cli_m.getNextWord(input);
-
-	for (std::vector<Surface*>::iterator it = selected_surfaces_m.begin(); it != selected_surfaces_m.end(); it++) {
+	
+	std::vector<Surface*>::iterator it = selected_surfaces_m.begin();
+	while(it != selected_surfaces_m.end()) {
 		std::string temp_name = (*it)->getName();
 		cli_m.toLower(temp_name);
-		if (type.compare(temp_name) == 0) {
-			selected_surfaces_m.erase(it);
-			it--;
+		if (type.compare(temp_name) != 0) {
+			it = selected_surfaces_m.erase(it);	
+		}
+		else {
+			it++;
 		}
 	}
 }
