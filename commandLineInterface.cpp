@@ -59,11 +59,36 @@ void CommandLineInterface::handleHelpMessage(std::string input) {
 	else if (additional_arg.compare("delete") == 0) {
 		std::cout << DELETE_HELP_MESSAGE << std::endl;
 	}
+	else if (additional_arg.compare("sort") == 0) {
+		std::cout << SORT_HELP_MESSAGE << std::endl;
+	}
+	else if (additional_arg.compare("select") == 0) {
+		std::cout << SELECT_HELP_MESSAGE << std::endl;
+	}
 	else if (additional_arg.compare("print") == 0) {
 		std::cout << PRINT_HELP_MESSAGE << std::endl;
 	}
+	else if (additional_arg.compare("read") == 0) {
+		std::cout << READ_HELP_MESSAGE << std::endl;
+	}
+	else if (additional_arg.compare("store") == 0) {
+		std::cout << STORE_HELP_MESSAGE << std::endl;
+	}
 	else if (additional_arg.compare("exit") == 0) {
 		std::cout << EXIT_HELP_MESSAGE << std::endl;
+	}
+	else if (additional_arg.compare("circle") == 0) {
+		std::cout << CIRCLE_HELP_MESSAGE << std::endl;
+	}
+	else if (additional_arg.compare("sector") == 0) {
+		std::cout << SECTOR_HELP_MESSAGE << std::endl;
+	}
+	else if (additional_arg.compare("polygon") == 0) {
+		std::cout << POLYGON_HELP_MESSAGE << std::endl;
+	}
+	else {
+		std::cout << "Unknown help option" << std::endl;
+		std::cout << GENERAL_HELP_MESSAGE << std::endl;
 	}
 }
 

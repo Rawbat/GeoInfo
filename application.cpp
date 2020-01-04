@@ -12,6 +12,7 @@
 #define SECTOR_ARGS 7
 #define POLYGON_ARGS 100000
 
+
 Application::Application() {
 	quit_m = false;
 }
@@ -23,8 +24,25 @@ void Application::run() {
 
 		standardizeInputString(input);
 
-		std::string command = cli_m.getNextWord(input);
+		try {
+			executeCommand(input);
+		}
+		catch (std::invalid_argument& const e) {
+			std::cout << e.what() << std::endl;
+		}
+		catch (std::out_of_range& const e) {
+			std::cout << e.what() << std::endl;
+		}
+		
+	}
+	std::cout << "Goodbye!" << std::endl;
+}
 
+void Application::executeCommand(std::string input) {
+
+	std::string command = cli_m.getNextWord(input);
+
+	try {
 		if (command.compare("help") == 0) {
 			cli_m.handleHelpMessage(input);
 		}
@@ -47,19 +65,25 @@ void Application::run() {
 			read(input);
 		}
 		else if (command.compare("store") == 0) {
-			store(surfaces_m, input);
+			store(input);
 		}
 		else if (command.compare("exit") == 0) {
 			quit_m = true;
 		}
 		else if (command.compare("") == 0) {
-			
+
 		}
 		else {
-			std::cout << "[ERROR] Command not found: " << "'" << command << "'" << std::endl;
+			throw std::invalid_argument("[ERROR] Command not found: '" + command + "'.");
 		}
 	}
-	std::cout << "Goodbye!" << std::endl;
+	catch (std::invalid_argument& const e) {
+		throw e;
+	}
+	catch (std::out_of_range& const e) {
+		throw e;
+	}
+	
 }
 
 void Application::createSurfaceOfString(std::string input) {
@@ -78,8 +102,7 @@ void Application::createSurfaceOfString(std::string input) {
 		arg_number = POLYGON_ARGS;
 	}
 	else {
-		std::cout << "[ERROR] Unknown surface type: " << type << std::endl;
-		return;
+		throw std::invalid_argument("[ERROR] Unknown surface type: '" + type + "'.");
 	}
 
 	for (int i = 0; i < arg_number; i++) {
@@ -88,27 +111,23 @@ void Application::createSurfaceOfString(std::string input) {
 			//Because a polygon theortically is able to have infinite edges an exception has to be made for this cause
 			if (type.compare("polygon") == 0) {
 				if ((i % 2) == 0) {
-					std::cout << "[ERROR] Last point in polygon is missing y argument." << std::endl;
-					return;
+					throw std::invalid_argument("[ERROR] Last point in polygon is missing y argument.");
 				}
 				break;
 			}
 			else {
-				std::cout << "[ERROR] Too few arguments." << std::endl;
-				return;
+				throw std::invalid_argument("[ERROR] Too few arguments.");
 			}
 		}
 		else {
 			try {
 				args.push_back(std::stod(arg_string));
 			}
-			catch (std::invalid_argument const &e) {
-				std::cout << "[ERROR] Invalid argument: " << "'" << arg_string << "'." << " Expected Integer" << std::endl;
-				return;
+			catch (std::invalid_argument) {
+				throw std::invalid_argument("[ERROR] Invalid argument: '" + arg_string + "'. Expected Integer.");
 			}
-			catch (std::out_of_range const &e) {
-				std::cout << "[ERROR] Number too big: " << "'" << arg_string << "'" << std::endl;
-				return;
+			catch (std::out_of_range) {
+				throw std::out_of_range("ERROR] Number too big: '" + arg_string + "'.");
 			}
 		}
 	}
@@ -132,7 +151,7 @@ void Application::createSurfaceOfString(std::string input) {
 			}
 			else if (type.compare("polygon") == 0) {
 				std::vector<Point> points;
-				for (int i = 1; i < args.size() - 1; i += 2) {
+				for (unsigned int i = 1; i < args.size() - 1; i += 2) {
 					points.push_back(Point(args.at(i), args.at(i + 1)));
 				}
 				Polygon* temp_polygon = new Polygon(id, points);
@@ -143,7 +162,7 @@ void Application::createSurfaceOfString(std::string input) {
 		}
 	}
 	catch (std::invalid_argument& e) {
-		std::cout << e.what() << std::endl;
+		throw e;
 	}
 
 	
@@ -194,13 +213,11 @@ void Application::deleteSurfaceOfString(std::string input) {
 	try {
 		id = std::stoi(id_string);
 	}
-	catch (std::invalid_argument const &e) {
-		std::cout << "[ERROR] Invalid argument: " << "'" << id_string << "'." << " Expected Integer" << std::endl;
-		return;
+	catch (std::invalid_argument) {
+		throw std::invalid_argument("[ERROR] Invalid argument: '" + id_string + "'. Expected Integer.");
 	}
-	catch (std::out_of_range const &e) {
-		std::cout << "[ERROR] Number too big: " << "'" << id_string << "'" << std::endl;
-		return;
+	catch (std::out_of_range) {
+		throw std::out_of_range("ERROR] Number too big: '" + id_string + "'.");
 	}
 
 	cli_m.printAdditionalArguments(input);
@@ -214,14 +231,13 @@ void Application::deleteSurfaceOfString(std::string input) {
 			return;
 		}
 	}
-	std::cout << "[ERROR] ID does not exist: " << "'" << id << "'" << std::endl;
+	throw std::invalid_argument("[ERROR] ID does not exist: '" + std::to_string(id) + "'.");
 }
 
 bool Application::idExists(int id) {
 	for (Surface *surface : surfaces_m) {
 		if (surface->getId() == id) {
-			std::cout << "[ERROR] ID already existing: " << "'" << id << "'" << std::endl;
-			return true;
+			std::cout << "[WARNING] ID already existing: '" << id << "'. Surface has not been added." << std::endl;
 		}
 	}
 	return false;
@@ -231,7 +247,7 @@ void Application::read(std::string input) {
 	std::string file_path = cli_m.getNextWord(input);
 
 	if (file_path.compare("") == 0) {
-		std::cout << "[ERROR] No file specified to read from." << std::endl;
+		throw std::invalid_argument("[ERROR] No file specified to read from.");
 	}
 
 	while (file_path.compare("") != 0) {
@@ -245,7 +261,7 @@ void Application::read(std::string input) {
 			file.close();
 		}
 		else {
-			std::cout << "[ERROR] Could not open file at relative path: " << file_path << std::endl;
+			std::cout << "[WARNING] Could not open file at relative path: " << file_path << std::endl;
 		}
 		file_path = cli_m.getNextWord(input);
 	}
@@ -255,28 +271,55 @@ void Application::read(std::string input) {
 	cli_m.printAdditionalArguments(input);
 }
 
-void Application::store(std::vector<Surface*> surfaces, std::string input) {
+void Application::store(std::string input) {
 	std::string file_path = cli_m.getNextWord(input);
 	if (file_path.compare("") == 0) {
 		std::cout << "[NOTIFICATION] No file path passed. Content is stored to standard file 'shapes.txt'." << std::endl;
 		file_path = "shapes.txt";
 	}
 
+	std::vector<Surface*> stored_surfaces;
+	std::string mode = cli_m.getNextWord(input);
+
+	if (mode.compare("selected") == 0 || mode.compare("") == 0) {
+		stored_surfaces = selected_surfaces_m;
+		std::cout << "Storing selected surfaces" << std::endl;
+	}
+	else if (mode.compare("all") == 0) {
+		std::cout << "Storing all loaded surfaces" << std::endl;
+		stored_surfaces = surfaces_m;
+	}
+	else {
+		throw std::invalid_argument("[ERROR] Unknown store mode: '" + mode + "'.");
+	}
+
 	std::ofstream file(file_path.c_str());
 	if (file.is_open()) {
-		for (Surface* surface : surfaces) {
+		for (Surface* surface : stored_surfaces) {
 			file << *surface << std::endl;
 		}
 		file.close();
 	}
 	else {
-		std::cout << "[ERROR] Could not open file at relative path: " << file_path << std::endl;
+		throw std::invalid_argument("[ERROR] Could not open file at relative path : '" + file_path + "'.");
 	}
+	std::cout << "Stored " << stored_surfaces.size() << " surfaces into " << file_path << std::endl;
+
 	cli_m.printAdditionalArguments(input);
 }
 
 void Application::selectSurfaces(std::string input) {
 	std::string type = cli_m.getNextWord(input);
+
+	if (type.compare("all") == 0 || type.compare("") == 0) {
+		selected_surfaces_m = surfaces_m;
+		std::cout << "All loaded surfaces have been selected." << std::endl;
+		return;
+	}
+	else if (type.compare("circle") != 0 && type.compare("sector") != 0 && type.compare("polygon") != 0)
+	{
+		throw std::invalid_argument("[ERROR] Unknown surface type: '" + type + "'.");
+	}
 	
 	std::vector<Surface*>::iterator it = selected_surfaces_m.begin();
 	while(it != selected_surfaces_m.end()) {
@@ -289,6 +332,7 @@ void Application::selectSurfaces(std::string input) {
 			it++;
 		}
 	}
+	std::cout << "Selected " << selected_surfaces_m.size() << " surfaces" << std::endl;
 }
 
 void Application::sortSurfaces(std::string input) {
@@ -296,8 +340,7 @@ void Application::sortSurfaces(std::string input) {
 	type = cli_m.getNextWord(input);
 
 	if (type.compare("ascending") != 0 && type.compare("descending") != 0) {
-		std::cout << "[ERROR] Unknown sort argument: " << type << std::endl;
-		return;
+		throw std::invalid_argument("[ERROR] Unknown sort mode: '" + type + "'.");
 	}
 
 	for (std::vector<Surface*>::iterator it1 = selected_surfaces_m.begin(); it1 != selected_surfaces_m.end(); it1++) {
@@ -346,13 +389,11 @@ void Application::printSingleSurface(std::string input) {
 	try {
 		id = std::stoi(input);
 	}
-	catch (std::invalid_argument const &e) {
-		std::cout << "[ERROR] Invalid argument: " << "'" << input << "'." << " Expected Integer" << std::endl;
-		return;
+	catch (std::invalid_argument) {
+		throw std::invalid_argument("[ERROR] Invalid argument: '" + input + "'. Expected Integer.");
 	}
-	catch (std::out_of_range const &e) {
-		std::cout << "[ERROR] Number too big: " << "'" << input << "'" << std::endl;
-		return;
+	catch (std::out_of_range) {
+		throw std::out_of_range("ERROR] Number too big: '" + input + "'.");
 	}
 
 	for (Surface *surface : surfaces_m) {
@@ -361,7 +402,7 @@ void Application::printSingleSurface(std::string input) {
 			return;
 		}
 	}
-	std::cout << "[ERROR] ID does not exist: " << "'" << id << "'" << std::endl;
+	throw std::invalid_argument("[ERROR] ID does not exist: '" + std::to_string(id) + "'.");
 }
 
 void Application::printSurfacesDetailed() {

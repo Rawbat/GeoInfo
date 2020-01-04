@@ -4,6 +4,7 @@
 #include <vector>
 #include "surface.h"
 #include "commandLineInterface.h"
+#include <unordered_map>
 
 class Application {
 	public:
@@ -11,13 +12,15 @@ class Application {
 		void run();	
 		
 	private:
+
 		bool quit_m;
 		void read(std::string input);
-		void store(std::vector<Surface*> surfaces, std::string input);
+		void store(std::string input);
 		void deleteSurface(Surface *surface);
 		void createSurfaceOfString(std::string input);
 		void deleteSurfaceOfString(std::string input);
 		void standardizeInputString(std::string& input);
+		void executeCommand(std::string input);
 
 		void selectSurfaces(std::string input);
 		void sortSurfaces(std::string input);
