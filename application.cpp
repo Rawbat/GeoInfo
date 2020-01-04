@@ -35,7 +35,7 @@ void Application::run() {
 			deleteSurfaceOfString(input);
 		}
 		else if (command.compare("sort") == 0) {
-
+			sortSurfaces(input);
 		}
 		else if (command.compare("select") == 0) {
 
@@ -297,17 +297,32 @@ void Application::selectSurfaces(std::string input) {
 void Application::sortSurfaces(std::string input) {
 	std::string type;
 	type = cli_m.getNextWord(input);
-	if (type.compare("ascending") == 0) {
-		//ascending
-		std::sort(selected_surfaces_m.begin(), selected_surfaces_m.end());
-	}
-	else if (type.compare("descending") == 0) {
-		//descending
-		std::sort(selected_surfaces_m.rbegin(), selected_surfaces_m.rend());
-	}
-	else {
+
+	if (type.compare("ascending") != 0 && type.compare("descending") != 0) {
 		std::cout << "[ERROR] Unknown sort argument: " << type << std::endl;
+		return;
 	}
+
+	for (std::vector<Surface*>::iterator it1 = selected_surfaces_m.begin(); it1 != selected_surfaces_m.end(); it1++) {
+		for (std::vector<Surface*>::iterator it2 = selected_surfaces_m.begin(); it2 != selected_surfaces_m.end(); it2++) {
+			if (*it1 != *it2) {
+				if (type.compare("ascending") == 0 && **it1 < **it2) {
+					Surface* temp = *it1;
+					*it1 = *it2;
+					*it2 = temp;
+				}
+				else if (type.compare("descending") == 0 && **it1 > **it2) {
+					Surface* temp = *it1;
+					*it1 = *it2;
+					*it2 = temp;
+				}
+			}
+
+		}
+	}
+	
+	//Check if the user added more arguments than neccessary
+	cli_m.printAdditionalArguments(input);
 }
 
 void Application::printSurfaces(std::string input) {
@@ -317,7 +332,7 @@ void Application::printSurfaces(std::string input) {
 		printSurfacesDetailed();
 	}
 	else if (mode.compare("") == 0) {
-		for (Surface *surface : surfaces_m) {
+		for (Surface *surface : selected_surfaces_m) {
 			std::cout << surface->getName() << " " << surface->getId() << std::endl;
 		}
 	}
@@ -354,7 +369,7 @@ void Application::printSingleSurface(std::string input) {
 
 void Application::printSurfacesDetailed() {
 	std::cout << "-----------------------------------" << std::endl;
-	for (Surface *surface : surfaces_m) {
+	for (Surface *surface : selected_surfaces_m) {
 		std::cout << surface->prettyString() << std::endl;
 		std::cout << "-----------------------------------" << std::endl;
 	}
