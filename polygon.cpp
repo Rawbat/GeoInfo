@@ -44,8 +44,8 @@ double Polygon::getArea() const {
 		fine_addition = x1 * y2 - y1 * x2;
 		area += fine_addition;
 	}
-	//TODO fix this
-	abs(area)/2;
+	//TODO fix this 
+	area = abs(area)/2;
 	return area;
 }
 
