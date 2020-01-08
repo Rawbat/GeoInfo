@@ -8,8 +8,14 @@ class CommandLineInterface {
 		std::string getInput();
 		std::string getNextWord(std::string &line);
 		void printAdditionalArguments(std::string input);
-		void handleHelpMessage(std::string input);
+
 		void toLower(std::string& input);
+
+		/// <summary>Removes all commas, brackets and additional spaces in the passed string. Also converts all alphabetical characters to lowercase.</summary>
+		/// <param name="input">Reference to the to be standardized string.</param>  
+		void standardizeInputString(std::string& input);
+
+		void handleHelpMessage(std::string input);
 	private:
 		const char* GENERAL_HELP_MESSAGE = "Acceptable commands are:\n -new\n -delete\n -sort\n -select\n -print\n -read\n -store\n -exit\nAcceptable surface types are:\n -circle\n -sector\n -polygon\nFor detailed help type 'help COMMAND_NAME'.";
 		const char* NEW_HELP_MESSAGE = "new SURFACE_TYPE ID REST_ARGUMENTS\nThe new command adds a new surface of a given type. The user is able to choose all values including the id.";

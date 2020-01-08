@@ -1,12 +1,14 @@
 #include "commandLineInterface.h"
 #include <iostream>
 
+//-----------------------------------------------------------------------------
 std::string CommandLineInterface::getInput() {
 	std::string line;
 	std::getline(std::cin, line);
 	return line;
 }
 
+//-----------------------------------------------------------------------------
 std::string CommandLineInterface::getNextWord(std::string &line) {
 	if (line.find(" ") == std::string::npos) {
 		std::string word = line.substr(0);
@@ -39,6 +41,7 @@ std::string CommandLineInterface::getNextWord(std::string &line) {
 	return word;
 }
 
+//-----------------------------------------------------------------------------
 void CommandLineInterface::toLower(std::string& input) {
 	for (unsigned int c = 0; c < input.size(); c++)
 	{
@@ -48,6 +51,45 @@ void CommandLineInterface::toLower(std::string& input) {
 	}
 }
 
+//-----------------------------------------------------------------------------
+void CommandLineInterface::standardizeInputString(std::string& input) {
+
+	//Convert everything to lowercase
+	toLower(input);
+
+	unsigned int c = 0;
+	while (c < input.size()) {
+		//Remove additional spaces
+		if (c < input.size() - 1 && input.at(c) == ' ' && input.at(c + 1) == ' ') {
+			input.erase(c, 1);
+		}
+		else if (input.at(c) == '\t') {
+			input.replace(c, 1, " ");
+			if (c > 0) {
+				c--;
+			}
+		}
+		//Remove all commas
+		else if (input.at(c) == ',') {
+			input.replace(c, 1, " ");
+			if (c > 0) {
+				c--;
+			}
+		}
+		//Remove all brackets
+		else if (input.at(c) == '(' || input.at(c) == ')') {
+			input.replace(c, 1, " ");
+			if (c > 0) {
+				c--;
+			}
+		}
+		else {
+			c++;
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
 void CommandLineInterface::handleHelpMessage(std::string input) {
 	std::string additional_arg = getNextWord(input);
 	if (additional_arg.compare("") == 0) {
@@ -92,6 +134,7 @@ void CommandLineInterface::handleHelpMessage(std::string input) {
 	}
 }
 
+//-----------------------------------------------------------------------------
 void CommandLineInterface::printAdditionalArguments(std::string input) {
 	std::string additional_arg = getNextWord(input);
 	if (additional_arg.compare("") != 0) {
