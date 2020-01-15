@@ -166,12 +166,10 @@ void Application::createSurfaceOfString(std::string input) {
 			if (type.compare("circle") == 0) {
 				Circle* temp_circle = new Circle(id, Point(args.at(1), args.at(2)), args.at(3));
 				surfaces_m.push_back(temp_circle);
-				selected_surfaces_m.push_back(temp_circle);
 			}
 			else if (type.compare("sector") == 0) {
 				CircleSector* temp_sector = new CircleSector(id, Point(args.at(1), args.at(2)), args.at(3), Point(args.at(4), args.at(5)), args.at(6));
 				surfaces_m.push_back(temp_sector);
-				selected_surfaces_m.push_back(temp_sector);
 			}
 			else if (type.compare("polygon") == 0) {
 				std::vector<Point> points;
@@ -181,7 +179,6 @@ void Application::createSurfaceOfString(std::string input) {
 				}
 				Polygon* temp_polygon = new Polygon(id, points);
 				surfaces_m.push_back(temp_polygon);
-				selected_surfaces_m.push_back(temp_polygon);
 			}
 			selected_surfaces_m = surfaces_m;
 		}
