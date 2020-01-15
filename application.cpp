@@ -212,17 +212,24 @@ void Application::deleteSurfaceOfString(std::string input) {
 	//Check if the user added more arguments than neccessary.
 	CommandLineInterface::printAdditionalArguments(input);
 
+   //Iterate through the selected surfaces. If one with the given id is found remove it from the vector.
+   for (std::vector<Surface*>::iterator it = selected_surfaces_m.begin(); it != selected_surfaces_m.end(); it++) {
+     if ((*it)->getId() == id) {
+       selected_surfaces_m.erase(it);
+       break;
+     }
+   }
+
 	//Iterate through all surfaces. If one with the given id is found delete it and remove it from the vector.
-	//TODO currently also resets the selection.
 	for (std::vector<Surface*>::iterator it = surfaces_m.begin(); it != surfaces_m.end(); it++) {
 		if ((*it)->getId() == id) {
 			std::cout << "Following surface has been deleted:" << std::endl << (*it)->prettyString() << std::endl;
 			delete *it;
 			surfaces_m.erase(it);
-			selected_surfaces_m = surfaces_m; //TODO when deleting a surface currently all remaing surfaces get selected.
 			return;
 		}
 	}
+   
 	throw std::invalid_argument("[ERROR] ID does not exist: '" + std::to_string(id) + "'.");
 }
 
