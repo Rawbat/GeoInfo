@@ -18,11 +18,10 @@ Polygon::Polygon(int id, std::vector<Point> points) {
 	for (unsigned int p = 0; p < points.size() - 1; p++) {
 		edges_m.push_back(Line(points.at(p), points.at(p + 1)));
 	}
+   edges_m.push_back(Line(points.at(points.size() - 1), points.at(0)));
 
 	id_m = id;
 	setName("POLYGON");
-
-   //TODO check if polygon is closed
 
    if (doesSelfIntersect()) {
      throw std::invalid_argument("Polygon with id: " + std::to_string(id) + " does self intersect. Only non self intersecting polygons are allowed.");
