@@ -18,6 +18,10 @@ void Point::setY(double y) {
 	y_m = y;
 }
 
+double Point::getEuclidianDistance(const Point point) const {
+  return std::sqrt(std::pow(getX() - point.getX(), 2) + std::pow(getY() - point.getY(), 2));
+}
+
 std::ostream& operator<<(std::ostream& out, const Point& point) {
 	out << "(" << point.getX() << "|" << point.getY() << ")";
 	return out;

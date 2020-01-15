@@ -8,9 +8,6 @@ Authors: Patrick Ablinger, Robert Leiner
 #include <cmath>
 #define _USE_MATH_DEFINES
 
-#define LEFT 1
-#define RIGHT -1
-#define ON 0
 
 //-----------------------------------------------------------------------------
 Polygon::Polygon(int id, std::vector<Point> points) {
@@ -28,13 +25,12 @@ Polygon::Polygon(int id, std::vector<Point> points) {
    //TODO check if polygon is closed
 
    if (doesSelfIntersect()) {
-     std::cout << "Intersection" << std::endl;
      throw std::invalid_argument("Polygon with id: " + std::to_string(id) + " does self intersect. Only non self intersecting polygons are allowed.");
    }
 }
 
 //-----------------------------------------------------------------------------
-bool Polygon::doesSelfIntersect() {
+bool Polygon::doesSelfIntersect() const {
   for (int i = 0; i < edges_m.size(); i++) {
     Point p1 = edges_m.at(i).getPoints().first;
     Point p2 = edges_m.at(i).getPoints().second;
@@ -43,19 +39,22 @@ bool Polygon::doesSelfIntersect() {
       Point q1 = edges_m.at(j).getPoints().first;
       Point q2 = edges_m.at(j).getPoints().second;
 
-      int pos_q1 = relativePositionTo(p1, p2, q1);
-      int pos_q2 = relativePositionTo(p1, p2, q2);
+      //Calculates if the points are left, right or on the line
+      int pos_q1 = edges_m.at(i).getRelativePointPosition(q1);
+      int pos_q2 = edges_m.at(i).getRelativePointPosition(q2);
 
-      if (pos_q1 == ON || pos_q2 == ON) {
+      //True if one of the points is on the line
+      if (pos_q1 == 0 || pos_q2 == 0) {
         continue;
       }
-      else if ((pos_q1 == RIGHT && pos_q2 == LEFT) || (pos_q1 == LEFT && pos_q2 == RIGHT)) {
-        Point s = getIntersection(p1, p2, q1, q2);
+      //True if the points are on opposite sides of the line
+      else if ((pos_q1 < 0 && pos_q2 > 0) || (pos_q1 > 0 && pos_q2 < 0)) {
+        Point s = edges_m.at(i).getIntersection(edges_m.at(j));
 
-        double distance_p1_s = getEuclidianDistance(p1, s);
-        double distance_p1_p2 = getEuclidianDistance(p1, p2);
+        double distance_p1_s = p1.getEuclidianDistance(s);
+        double distance_p1_p2 = p1.getEuclidianDistance(p2);
 
-        //If true the intersection point of the linear equation lies on the line
+        //If true the intersection point of the linear equation lies on the actual line
         //That means there is an intersection
         if (distance_p1_s < distance_p1_p2) {
           return true;
@@ -64,48 +63,6 @@ bool Polygon::doesSelfIntersect() {
     }
   }
   return false;
-}
-
-//-----------------------------------------------------------------------------
-int Polygon::relativePositionTo(Point p1, Point p2, Point q) {
-  //Calculate the determinant:
-  // (p1_x  p2_x  q_x)
-  // (p1_y  p2_y  q_y)
-  // (1     1     1  )
-  double det_q = p1.getX() * p2.getY() + p2.getX() * q.getY() + q.getX() * p1.getY()
-    - p2.getY() * q.getX() - q.getY() * p1.getX() - p1.getY() * p2.getX();
-
-  if (det_q < 0) {
-    return RIGHT;
-  }
-  else if (det_q > 0) {
-    return LEFT;
-  }
-  else {
-    return ON;
-  }
-}
-
-//-----------------------------------------------------------------------------
-Point Polygon::getIntersection(Point p1, Point p2, Point q1, Point q2) {
-  //Create linear equation y = a * x + b
-  double a = (p1.getY() - p2.getY()) / (p1.getX() - p2.getX());
-  double b = p1.getY() - (a * p1.getX());
-
-  //Create linear equation y = c * x + d
-  double c = (q1.getY() - q2.getY()) / (q1.getX() - q2.getX());
-  double d = q1.getY() - (c * q1.getX());
-
-  //Solve for intersect x coordinated
-  double x = (d - b) / (a - c);
-
-  //Return intersect point
-  return Point(x, a * x + b);
-}
-
-//-----------------------------------------------------------------------------
-double Polygon::getEuclidianDistance(Point p1, Point p2) {
-  return std::sqrt(std::pow(p1.getX() - p2.getX(), 2) + std::pow(p1.getY() - p2.getY(), 2));
 }
 
 //-----------------------------------------------------------------------------

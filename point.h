@@ -18,6 +18,8 @@ class Point {
 		void setX(double x);
 		void setY(double y);
 
+      double getEuclidianDistance(Point point) const;
+
 		//Overloaded Operators
 		friend std::ostream& operator<<(std::ostream& out, const Point& point);
 

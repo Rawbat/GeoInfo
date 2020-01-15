@@ -43,11 +43,7 @@ class Polygon : public Surface{
 	private:
      /// <summary>Checks if the polygon does self intersect and returns the result.</summary>
      /// <returns>A boolean value set to true if the polygon does self intersect.</returns> 
-     bool doesSelfIntersect();
-
-     int relativePositionTo(Point p1, Point p2, Point q);
-     Point getIntersection(Point p1, Point p2, Point q1, Point q2);
-     double getEuclidianDistance(Point p1, Point p2);
+     bool doesSelfIntersect() const;
      
      /// <summary>The edges defining the polygon.</summary>
 	  std::vector<Line> edges_m;

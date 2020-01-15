@@ -17,7 +17,11 @@ class Line {
 		
 		//Setter
 		void setPoints(std::pair<Point, Point> points);
-		void setPoints(Point a, Point b); //overloaded meth
+		void setPoints(Point a, Point b); //overloaded
+
+     // Point getIntersection(Point p1, Point p2, Point q1, Point q2);
+      Point getIntersection(Line line) const;
+      int getRelativePointPosition(Point q) const;
 
 		friend std::ostream& operator<<(std::ostream& out, const Line& line);
 
