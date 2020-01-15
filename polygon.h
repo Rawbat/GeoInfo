@@ -1,3 +1,8 @@
+/*
+Projekt: Flächenhafte Objekte
+Authors: Patrick Ablinger, Robert Leiner
+*/
+
 #ifndef POLYGON_H
 #define POLYGON_H
 
@@ -10,24 +15,42 @@ class Polygon : public Surface{
 	public:
 		//Constructors
 		Polygon(int id, std::vector<Point> points);
-		Polygon(int id, std::vector<Line> edges);
 
-		//Getter
+      /// <summary>Returns the edges of the polygon as a vector.</summary>
+      /// <returns>The vector containing the edges.</returns> 
 		std::vector<Line> getEdges() const { return edges_m; }
 
-		//Setter
-		void setEdges(std::vector<Line> edges);
+      /// <summary>Calculates and returns the area of the polygon.</summary>
+      /// <returns>A double containing the polygon area.</returns> 
+		double getArea() const;
 
-		virtual double getArea() const;
-
+      /// <summary>Returns a string containing detailed and formatted information about the polygon.</summary>
+      /// <returns>The string containing the information.</returns> 
 		std::string prettyString() const;
-		friend std::ostream& operator<<(std::ostream& out, const Polygon& polygon);
-		std::ostream& print(std::ostream& out) const;
 
+      /// <summary>The overloaded ostream operator. Returns an ostream containing information about the polygon formatted for file storing.</summary>
+      /// <param name="out">The ostream to be filled with the information.</param>  
+      /// <param name="polygon">The polygon to fill the ostream.</param>
+      /// <returns>The ostream containing the information.</returns> 
+		friend std::ostream& operator<<(std::ostream& out, const Polygon& polygon);
+
+      /// <summary>Helper function that calls the overloaded ostream function. Needed because of inheritance.</summary>
+      /// <returns>The ostream returned by the overloaded ostream function.</returns> 
+		std::ostream& print(std::ostream& out) const; 
+      
 		//Destructor
 		~Polygon();
 	private:
-		std::vector<Line> edges_m;
+     /// <summary>Checks if the polygon does self intersect and returns the result.</summary>
+     /// <returns>A boolean value set to true if the polygon does self intersect.</returns> 
+     bool doesSelfIntersect();
+
+     int relativePositionTo(Point p1, Point p2, Point q);
+     Point getIntersection(Point p1, Point p2, Point q1, Point q2);
+     double getEuclidianDistance(Point p1, Point p2);
+     
+     /// <summary>The edges defining the polygon.</summary>
+	  std::vector<Line> edges_m;
 };
 
 #endif

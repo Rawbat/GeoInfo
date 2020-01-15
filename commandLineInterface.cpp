@@ -1,5 +1,24 @@
+/*
+Projekt: Flächenhafte Objekte
+Authors: Patrick Ablinger, Robert Leiner
+*/
+
 #include "commandLineInterface.h"
 #include <iostream>
+
+const char* CommandLineInterface::GENERAL_HELP_MESSAGE = "Acceptable commands are:\n -new\n -delete\n -sort\n -select\n -print\n -read\n -store\n -exit\nAcceptable surface types are:\n -circle\n -sector\n -polygon\nFor detailed help type 'help <command name>'.";
+const char* CommandLineInterface::NEW_HELP_MESSAGE = "new <surface type> <id> <rest arguments>\nThe new command adds a new surface of a given type. The user is able to choose all values including the id.";
+const char* CommandLineInterface::DELETE_HELP_MESSAGE = "delete <id>\nDeletes the surface with the given id if it exists.";
+const char* CommandLineInterface::SORT_HELP_MESSAGE = "sort <mode>\nSorts the selected surfaces either 'ascending or 'descending'.";
+const char* CommandLineInterface::SELECT_HELP_MESSAGE = "select <surface type>\nSelects only surfaces of a given type. If 'all' or no surface type is given selects all surfaces.";
+const char* CommandLineInterface::PRINT_HELP_MESSAGE = "print <mode>\nPrints an overview of all selected surfaces to the cmd if no mode is passed. The mode 'detailed' prints exact information of all and if an id is passed as mode only this surfaces is printed in detail.";
+const char* CommandLineInterface::READ_HELP_MESSAGE = "read <file path>...\nAdds all surfaces found in the file at given path to the current loaded and selected surfaces. Possible to enter multiple file paths.";
+const char* CommandLineInterface::STORE_HELP_MESSAGE = "store <file path> <mode>\nStores surfaces to passed file path. If no path is given stores them to 'shapes.txt'. If no mode or 'selected' is passed stores only the selected surfaces. If 'all' is passed stores all.";
+const char* CommandLineInterface::EXIT_HELP_MESSAGE = "exit\nCloses the program.";
+
+const char* CommandLineInterface::CIRCLE_HELP_MESSAGE = "The syntax to create a circle looks like this:\n circle <id> (<center_x>, <center_y>) <radius>\nBrackets and commas are optional.";
+const char* CommandLineInterface::SECTOR_HELP_MESSAGE = "The syntax to create a sector looks like this:\n sector <id> (<center_x>, <center_y>) <radius> (<opening point_x>, <opening point_y>) <aperture>\nBrackets and commas are optional.";
+const char* CommandLineInterface::POLYGON_HELP_MESSAGE = "The syntax to create a polygon looks like this:\n polygon <id> (<point1_x>, <point1_y>) (<point2_x>, <point2_y>) (<point3_x>, <point3_y>) ...\nAt least three points have to be passed. Brackets and commas are optional.";
 
 //-----------------------------------------------------------------------------
 std::string CommandLineInterface::getInput() {

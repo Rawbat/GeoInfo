@@ -9,6 +9,8 @@ class Surface {
 		//Surface();
 
 		virtual double getArea() const = 0;
+
+      
 		virtual std::string prettyString() const = 0;
 
 		int getId() const { return id_m; }

@@ -20,6 +20,8 @@ class Circle : public Surface {
 
 		virtual double getArea() const;
 
+      /// <summary>Returns a string containing detailed and formatted information about the circle</summary>
+      /// <returns>The string containing the information</returns> 
 		std::string prettyString() const;
 
 		//Destructor

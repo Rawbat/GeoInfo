@@ -1,3 +1,8 @@
+/*
+Projekt: Flächenhafte Objekte
+Authors: Patrick Ablinger, Robert Leiner
+*/
+
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
@@ -7,24 +12,23 @@
 #include <unordered_map>
 #include <stdexcept>
 
+/// <summary>A command line application to read, create, display and store different types of geometry. Call run to start it.</summary>
 class Application {
 	public:
-		Application();
+      //Constructor
+	   Application();
 
 		/// <summary>The main loop of the application. Calls helper functions to gather input and process it.</summary>
 		void run();	
 		
 	private:
-		//If false the main loop stops. Set to false by the exit command.
+      /// <summary>If false the main loop stops. Set to false by the exit command.</summary>
 		bool quit_m;
 
-		//Helper object for console reading and string manipulation.
-		CommandLineInterface cli_m;
-
-		//All loaded surfaces
+      /// <summary>All loaded surfaces</summary>
 		std::vector<Surface*> surfaces_m;
 
-		//THe currently selected surfaces. Subset of all loaded surfaces.
+      /// <summary>The currently selected surfaces. Subset of all loaded surfaces.</summary>
 		std::vector<Surface*> selected_surfaces_m;
 
 		/// <summary>Executes the first word of the passed string as a command.</summary>

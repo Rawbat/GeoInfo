@@ -1,3 +1,8 @@
+/*
+Projekt: Flächenhafte Objekte
+Authors: Patrick Ablinger, Robert Leiner
+*/
+
 #include "application.h"
 #include <iostream>
 #include <string>
@@ -24,8 +29,8 @@ void Application::run() {
 	while (!quit_m) {
 		std::cout << ">> ";
 
-		std::string input = cli_m.getInput();
-		cli_m.standardizeInputString(input);
+		std::string input = CommandLineInterface::getInput();
+		CommandLineInterface::standardizeInputString(input);
 
 		try {
 			executeCommand(input);
@@ -43,11 +48,11 @@ void Application::run() {
 //-----------------------------------------------------------------------------
 void Application::executeCommand(std::string input) {
 
-	std::string command = cli_m.getNextWord(input);
+	std::string command = CommandLineInterface::getNextWord(input);
 
 	try {
 		if (command.compare("help") == 0) {
-			cli_m.handleHelpMessage(input);
+			CommandLineInterface::handleHelpMessage(input);
 		}
 		else if (command.compare("new") == 0) {
 			createSurfaceOfString(input);
@@ -100,7 +105,7 @@ bool Application::idExists(int id) {
 
 //-----------------------------------------------------------------------------
 void Application::createSurfaceOfString(std::string input) {
-	std::string type = cli_m.getNextWord(input);
+	std::string type = CommandLineInterface::getNextWord(input);
 
 	std::vector<double> args;
 	int arg_number = 0;
@@ -121,7 +126,7 @@ void Application::createSurfaceOfString(std::string input) {
 
 	//Get the next n words. n depends on the type of surface. If not enough words are present in the string throw an exception.
 	for (int i = 0; i < arg_number; i++) {
-		std::string arg_string = cli_m.getNextWord(input);
+		std::string arg_string = CommandLineInterface::getNextWord(input);
 		if (arg_string.compare("") == 0) {
 			//Because a polygon theortically is able to have infinite edges an exception has to be made for this cause
 			if (type.compare("polygon") == 0) {
@@ -151,7 +156,7 @@ void Application::createSurfaceOfString(std::string input) {
 	}
 
 	//Check if the user added more arguments than neccessary
-	cli_m.printAdditionalArguments(input);
+	CommandLineInterface::printAdditionalArguments(input);
 
 	int id = static_cast<int>(args.at(0));
 
@@ -191,7 +196,7 @@ void Application::createSurfaceOfString(std::string input) {
 
 //-----------------------------------------------------------------------------
 void Application::deleteSurfaceOfString(std::string input) {
-	std::string id_string = cli_m.getNextWord(input);
+	std::string id_string = CommandLineInterface::getNextWord(input);
 	int id;
 
 	try {
@@ -205,7 +210,7 @@ void Application::deleteSurfaceOfString(std::string input) {
 	}
 
 	//Check if the user added more arguments than neccessary.
-	cli_m.printAdditionalArguments(input);
+	CommandLineInterface::printAdditionalArguments(input);
 
 	//Iterate through all surfaces. If one with the given id is found delete it and remove it from the vector.
 	//TODO currently also resets the selection.
@@ -224,7 +229,7 @@ void Application::deleteSurfaceOfString(std::string input) {
 //-----------------------------------------------------------------------------
 void Application::sortSurfaces(std::string input) {
 	std::string type;
-	type = cli_m.getNextWord(input);
+	type = CommandLineInterface::getNextWord(input);
 
 	//Checks if the sort type exists.
 	if (type.compare("ascending") != 0 && type.compare("descending") != 0) {
@@ -251,12 +256,12 @@ void Application::sortSurfaces(std::string input) {
 	}
 
 	//Check if the user added more arguments than neccessary
-	cli_m.printAdditionalArguments(input);
+	CommandLineInterface::printAdditionalArguments(input);
 }
 
 //-----------------------------------------------------------------------------
 void Application::selectSurfaces(std::string input) {
-	std::string type = cli_m.getNextWord(input);
+	std::string type = CommandLineInterface::getNextWord(input);
 
 	//Checks if the select type is valid.
 	if (type.compare("all") == 0 || type.compare("") == 0) {
@@ -274,7 +279,7 @@ void Application::selectSurfaces(std::string input) {
 	while (it != selected_surfaces_m.end()) {
 		//Get the name of the surface to compare it to the selection criteria
 		std::string temp_name = (*it)->getName();
-		cli_m.toLower(temp_name);
+		CommandLineInterface::toLower(temp_name);
 		if (type.compare(temp_name) != 0) {
 			it = selected_surfaces_m.erase(it);
 		}
@@ -288,7 +293,7 @@ void Application::selectSurfaces(std::string input) {
 
 //-----------------------------------------------------------------------------
 void Application::read(std::string input) {
-	std::string file_path = cli_m.getNextWord(input);
+	std::string file_path = CommandLineInterface::getNextWord(input);
 
 	if (file_path.compare("") == 0) {
 		throw std::invalid_argument("[ERROR] No file specified to read from.");
@@ -305,7 +310,7 @@ void Application::read(std::string input) {
 
 			std::string line;
 			while (std::getline(file, line)) {
-				cli_m.standardizeInputString(line);
+				CommandLineInterface::standardizeInputString(line);
 				try {
 					createSurfaceOfString(line);
 				}
@@ -331,16 +336,16 @@ void Application::read(std::string input) {
 		else {
 			std::cout << "[ERROR] Could not open file at relative path: " << file_path << std::endl;
 		}
-		file_path = cli_m.getNextWord(input);
+		file_path = CommandLineInterface::getNextWord(input);
 	}
 
 	//Check if the user added more arguments than neccessary
-	cli_m.printAdditionalArguments(input);
+	CommandLineInterface::printAdditionalArguments(input);
 }
 
 //-----------------------------------------------------------------------------
 void Application::store(std::string input) {
-	std::string file_path = cli_m.getNextWord(input);
+	std::string file_path = CommandLineInterface::getNextWord(input);
 
 	//Store to standard file if no file path is passed
 	if (file_path.compare("") == 0) {
@@ -349,7 +354,7 @@ void Application::store(std::string input) {
 	}
 
 	std::vector<Surface*> stored_surfaces;
-	std::string mode = cli_m.getNextWord(input);
+	std::string mode = CommandLineInterface::getNextWord(input);
 
 	//Checks if the store mode is valid and sets the to be stored surface vector accordingly.
 	if (mode.compare("selected") == 0 || mode.compare("") == 0) {
@@ -378,12 +383,12 @@ void Application::store(std::string input) {
 	std::cout << "Stored " << stored_surfaces.size() << " surfaces into " << file_path << std::endl;
 
 	//Check if the user added more arguments than neccessary
-	cli_m.printAdditionalArguments(input);
+	CommandLineInterface::printAdditionalArguments(input);
 }
 
 //-----------------------------------------------------------------------------
 void Application::printSurfaces(std::string input) {
-	std::string mode = cli_m.getNextWord(input);
+	std::string mode = CommandLineInterface::getNextWord(input);
 
 	if (mode.compare("detailed") == 0) {
 		printSurfacesDetailed();
