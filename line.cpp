@@ -56,7 +56,7 @@ Point Line::getIntersection(const Line line) const {
 }
 
 //-----------------------------------------------------------------------------
-int Line::getRelativePointPosition(const Point q) const {
+double Line::getRelativePointPosition(const Point q) const {
   Point p1 = getPoints().first;
   Point p2 = getPoints().second;
 

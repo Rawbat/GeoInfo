@@ -39,8 +39,8 @@ bool Polygon::doesSelfIntersect() const {
       Point q2 = edges_m.at(j).getPoints().second;
 
       //Calculates if the points are left, right or on the line
-      int pos_q1 = edges_m.at(i).getRelativePointPosition(q1);
-      int pos_q2 = edges_m.at(i).getRelativePointPosition(q2);
+      double pos_q1 = edges_m.at(i).getRelativePointPosition(q1);
+      double pos_q2 = edges_m.at(i).getRelativePointPosition(q2);
 
       //True if q1 is on the line
       if (pos_q1 == 0) {

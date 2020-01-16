@@ -39,7 +39,7 @@ class Line {
       /// <summary>Calculates the determinant of the two line points and the passed point to determin its relative position to the line.</summary>
       /// <param name="q">The point which relative position is to be determined.</param> 
       /// <returns>The result of the determinant calculation.</returns>
-      int getRelativePointPosition(Point q) const;
+      double getRelativePointPosition(Point q) const;
 
       /// <summary>The overloaded ostream operator. Returns an ostream containing information about the line.</summary>
       /// <param name="out">The ostream to be filled with the information.</param>  
