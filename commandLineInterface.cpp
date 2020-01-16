@@ -30,28 +30,54 @@ std::string CommandLineInterface::getInput() {
 
 //-----------------------------------------------------------------------------
 std::string CommandLineInterface::getNextWord(std::string &line) {
+   //If no mores spaces can be found take the whole string and return it as the word.
 	if (line.find(" ") == std::string::npos) {
 		std::string word = line.substr(0);
 		line = "";
+
+      //Check if a high comma is present
+      if (word.find("'") != std::string::npos) {
+        int high_comma_pos = word.find("'");
+        //If the high comma is not at the start of the string its not valid
+        if (high_comma_pos != 0) {
+          throw std::invalid_argument("Unexpected: '");
+        }
+        //Erase the first high comma
+        word.erase(high_comma_pos, 1);
+
+        //Find the second high comma and erase it
+        if (word.find("'") != std::string::npos) {
+          high_comma_pos = word.find("'");
+          word.erase(high_comma_pos);
+        }
+        //If there is no second high comma its not valid
+        else {
+          throw std::invalid_argument("Missing: '");
+        }
+      }
+      
 		return word;
 	}
 
+   //Helper indices
 	int space_pos = line.find(" ");
 	int word_start = 0;
 	
 	std::string word;
+   //Check if a high comma is present before the next space
 	if (line.find("'") != std::string::npos && line.find("'") < space_pos) {
+     //If the high comma is not at the start of the string its not valid
 		if (line.find("'") != 0) {
-			std::cout << "Unexpected: " <<  "'" << std::endl;
-			return "";
+         throw std::invalid_argument("Unexpected: '");
 		}
+      //Set the indices according to the high commas to include everything between
 		if (line.find("'", 1) != std::string::npos && line.find("'", 1) > space_pos) {
 			word_start = line.find("'") + 1;
 			space_pos = line.find("'", 1) - 1;
 		}
+      //If there is no second high comma its not valid
 		else {
-			std::cout << "Missing: " << "'" << std::endl;
-			return "";
+         throw std::invalid_argument("Missing: '");
 		}
 	}
 
