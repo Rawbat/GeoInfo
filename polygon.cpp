@@ -92,20 +92,20 @@ bool Polygon::checkAdditionalPointIntersectionCriteria(Point p1, Point p2, Point
 
 //-----------------------------------------------------------------------------
 double Polygon::getArea() const {
-	double area = 0;
-	double fine_addition;
-	double x1, x2, y1, y2;
-	for (unsigned i = 0; i < getEdges().size() - 1; i++) { 
-		x1 = edges_m[i].getPoints().first.getX();
-		x2 = edges_m[i+1].getPoints().first.getX();
-		y1 = edges_m[i].getPoints().first.getY();
-		y2 = edges_m[i+1].getPoints().first.getY();
+  double area = 0;
+  double fine_addition;
+  double x1, x2, y1, y2;
+  for (unsigned i = 0; i < getEdges().size(); i++) {
+    x1 = edges_m[i].getPoints().first.getX();
+    x2 = edges_m[i].getPoints().second.getX();
+    y1 = edges_m[i].getPoints().first.getY();
+    y2 = edges_m[i].getPoints().second.getY();
 
-		fine_addition = x1 * y2 - y1 * x2;
-		area += fine_addition;
-	}
-	area = abs(area)/2;
-	return area;
+    fine_addition = x1 * y2 - y1 * x2;
+    area += fine_addition;
+  }
+  area = abs(area) / 2;
+  return area;
 }
 
 //-----------------------------------------------------------------------------
