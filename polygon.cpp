@@ -34,7 +34,10 @@ bool Polygon::doesSelfIntersect() const {
     Point p1 = edges_m.at(i).getPoints().first;
     Point p2 = edges_m.at(i).getPoints().second;
 
-    for (int j = i + 1; j < edges_m.size(); j++) {
+    for (int j = 0; j < edges_m.size(); j++) {
+      if (i == j) {
+        continue;
+      }
       Point q1 = edges_m.at(j).getPoints().first;
       Point q2 = edges_m.at(j).getPoints().second;
 
@@ -81,16 +84,6 @@ bool Polygon::checkAdditionalPointIntersectionCriteria(Point p1, Point p2, Point
 
     //True if q is actually between p1 and p2 on the line
     if (distance_p1_q < distance_p1_p2 && distance_p2_q < distance_p1_p2) {
-      return true;
-    }
-    //True if p2 is on the line of p1 and q
-    Line edge_q_p1(q, p1);
-    if (edge_q_p1.getRelativePointPosition(p2) == 0) {
-      return true;
-    }
-    //True if p1 is on the line of p2 and q
-    Line edge_q_p2(q, p2);
-    if (edge_q_p2.getRelativePointPosition(p1) == 0) {
       return true;
     }
   }
