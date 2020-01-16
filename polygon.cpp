@@ -42,23 +42,56 @@ bool Polygon::doesSelfIntersect() const {
       int pos_q1 = edges_m.at(i).getRelativePointPosition(q1);
       int pos_q2 = edges_m.at(i).getRelativePointPosition(q2);
 
-      //True if one of the points is on the line
-      if (pos_q1 == 0 || pos_q2 == 0) {
-        continue;
+      //True if q1 is on the line
+      if (pos_q1 == 0) {
+        if (checkAdditionalPointIntersectionCriteria(p1, p2, q1)) {
+          return true;
+        }
+      }
+      //True if q2 is on the line
+      if (pos_q2 == 0) {
+        if (checkAdditionalPointIntersectionCriteria(p1, p2, q2)) {
+          return true;
+        }
       }
       //True if the points are on opposite sides of the line
       else if ((pos_q1 < 0 && pos_q2 > 0) || (pos_q1 > 0 && pos_q2 < 0)) {
         Point s = edges_m.at(i).getIntersection(edges_m.at(j));
 
-        double distance_p1_s = p1.getEuclidianDistance(s);
         double distance_p1_p2 = p1.getEuclidianDistance(p2);
+        double distance_p1_s = p1.getEuclidianDistance(s);
+        double distance_p2_s = p2.getEuclidianDistance(s);
 
-        //If true the intersection point of the linear equation lies on the actual line
-        //That means there is an intersection
-        if (distance_p1_s < distance_p1_p2) {
+        //True if s is actually between p1 and p2 on the line
+        if (distance_p1_s < distance_p1_p2 && distance_p2_s < distance_p1_p2) {
           return true;
         }
       }
+    }
+  }
+  return false;
+}
+
+//-----------------------------------------------------------------------------
+bool Polygon::checkAdditionalPointIntersectionCriteria(Point p1, Point p2, Point q) const {
+  if (q != p1 && q != p2) {
+    double distance_p1_p2 = p1.getEuclidianDistance(p2);
+    double distance_p1_q = p1.getEuclidianDistance(q);
+    double distance_p2_q = p2.getEuclidianDistance(q);
+
+    //True if q is actually between p1 and p2 on the line
+    if (distance_p1_q < distance_p1_p2 && distance_p2_q < distance_p1_p2) {
+      return true;
+    }
+    //True if p2 is on the line of p1 and q
+    Line edge_q_p1(q, p1);
+    if (edge_q_p1.getRelativePointPosition(p2) == 0) {
+      return true;
+    }
+    //True if p1 is on the line of p2 and q
+    Line edge_q_p2(q, p2);
+    if (edge_q_p2.getRelativePointPosition(p1) == 0) {
+      return true;
     }
   }
   return false;

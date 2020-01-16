@@ -33,6 +33,14 @@ double Point::getEuclidianDistance(const Point point) const {
 }
 
 //-----------------------------------------------------------------------------
+bool Point::operator!=(const Point& point) const {
+  if (getX() != point.getX() || getY() != point.getY()) {
+    return true;
+  }
+  return false;
+}
+
+//-----------------------------------------------------------------------------
 std::ostream& operator<<(std::ostream& out, const Point& point) {
 	out << "(" << point.getX() << "|" << point.getY() << ")";
 	return out;

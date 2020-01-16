@@ -43,6 +43,13 @@ class Polygon : public Surface{
      /// <returns>A boolean value set to true if the polygon does self intersect.</returns> 
      bool doesSelfIntersect() const;
 
+     /// <summary>Performs additional intersection tests on point q with line defined by p1 and p2.</summary>
+     /// <param name="p1">First point of the line.</param>
+     /// <param name="p2">Second point of the line.</param> 
+     /// <param name="q">Point to perform intersection tests on.</param> 
+     /// <returns>A boolean value set to true if an intersection occured.</returns> 
+     bool checkAdditionalPointIntersectionCriteria(Point p1, Point p2, Point q) const;
+
      /// <summary>Helper function that calls the overloaded ostream function. Needed because of inheritance.</summary>
      /// <returns>The ostream returned by the overloaded ostream function.</returns> 
      std::ostream& print(std::ostream& out) const;
