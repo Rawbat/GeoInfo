@@ -11,6 +11,7 @@ Authors: Patrick Ablinger, Robert Leiner
 #include "line.h"
 #include <vector>
 
+/// <summary>A surface type defined by edges.</summary>
 class Polygon : public Surface{
 	public:
 		//Constructors
@@ -32,21 +33,19 @@ class Polygon : public Surface{
       /// <param name="out">The ostream to be filled with the information.</param>  
       /// <param name="polygon">The polygon to fill the ostream.</param>
       /// <returns>The ostream containing the information.</returns> 
-		friend std::ostream& operator<<(std::ostream& out, const Polygon& polygon);
-
-      /// <summary>Helper function that calls the overloaded ostream function. Needed because of inheritance.</summary>
-      /// <returns>The ostream returned by the overloaded ostream function.</returns> 
-		std::ostream& print(std::ostream& out) const; 
+		friend std::ostream& operator<<(std::ostream& out, const Polygon& polygon);  
       
-		//Destructor
-		~Polygon();
-	private:
+	private: 
+     /// <summary>The edges defining the polygon.</summary>
+	  std::vector<Line> edges_m;
+
      /// <summary>Checks if the polygon does self intersect and returns the result.</summary>
      /// <returns>A boolean value set to true if the polygon does self intersect.</returns> 
      bool doesSelfIntersect() const;
-     
-     /// <summary>The edges defining the polygon.</summary>
-	  std::vector<Line> edges_m;
+
+     /// <summary>Helper function that calls the overloaded ostream function. Needed because of inheritance.</summary>
+     /// <returns>The ostream returned by the overloaded ostream function.</returns> 
+     std::ostream& print(std::ostream& out) const;
 };
 
 #endif

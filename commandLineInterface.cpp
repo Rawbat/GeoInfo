@@ -6,6 +6,7 @@ Authors: Patrick Ablinger, Robert Leiner
 #include "commandLineInterface.h"
 #include <iostream>
 
+//-----------------------------------------------------------------------------
 const char* CommandLineInterface::GENERAL_HELP_MESSAGE = "Acceptable commands are:\n -new\n -delete\n -sort\n -select\n -print\n -read\n -store\n -exit\nAcceptable surface types are:\n -circle\n -sector\n -polygon\nFor detailed help type 'help <command name>'.";
 const char* CommandLineInterface::NEW_HELP_MESSAGE = "new <surface type> <id> <rest arguments>\nThe new command adds a new surface of a given type. The user is able to choose all values including the id. If the surface is added the present selection is reset.";
 const char* CommandLineInterface::DELETE_HELP_MESSAGE = "delete <id>\nDeletes the surface with the given id if it exists.";

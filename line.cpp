@@ -1,27 +1,38 @@
+/*
+Projekt: Flächenhafte Objekte
+Authors: Patrick Ablinger, Robert Leiner
+*/
+
 #include "line.h"
 #include "point.h"
 
+//-----------------------------------------------------------------------------
 Line::Line() {
 	points_m = std::make_pair(Point(), Point());
 
 }
 
+//-----------------------------------------------------------------------------
 Line::Line(Point a, Point b) {
 	points_m = std::make_pair(a, b);
 }
 
+//-----------------------------------------------------------------------------
 Line::Line(std::pair<Point, Point> points) {
 	points_m = points;
 }
 
+//-----------------------------------------------------------------------------
+void Line::setPoints(Point a, Point b) {
+  points_m = std::make_pair(a, b);
+}
+
+//-----------------------------------------------------------------------------
 void Line::setPoints(std::pair<Point, Point> points) {
 	points_m = points;
 }
 
-void Line::setPoints(Point a, Point b) {
-	points_m = std::make_pair(a, b);
-}
-
+//-----------------------------------------------------------------------------
 Point Line::getIntersection(const Line line) const {
   Point p1 = getPoints().first;
   Point p2 = getPoints().second;
@@ -44,6 +55,7 @@ Point Line::getIntersection(const Line line) const {
   return Point(x, a * x + b);
 }
 
+//-----------------------------------------------------------------------------
 int Line::getRelativePointPosition(const Point q) const {
   Point p1 = getPoints().first;
   Point p2 = getPoints().second;
@@ -58,6 +70,7 @@ int Line::getRelativePointPosition(const Point q) const {
   return det_q;
 }
 
+//-----------------------------------------------------------------------------
 std::ostream& operator<<(std::ostream& out, const Line& line) {
 	out << line.getPoints().first << "-" << line.getPoints().second;
 	return out;
