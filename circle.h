@@ -13,7 +13,7 @@ Authors: Patrick Ablinger, Robert Leiner
 class Circle : public Surface {
 	public:
 		//Contructors
-		Circle(int id, Point center, double radius = 1);
+		Circle(int id, Point center, double radius);
 
       /// <summary>Returns the center of the circle.</summary>
       /// <returns>The center as a point.</returns>
