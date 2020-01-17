@@ -16,7 +16,7 @@ Polygon::Polygon(int id, std::vector<Point> points) {
 	}
 
    for (int i = 0; i < points.size(); i++) {
-     for (int j = i; j < points.size(); j++) {
+     for (int j = i + 1; j < points.size(); j++) {
        if (points.at(i) == points.at(j)) {
          throw std::invalid_argument("[Error] Polygon with id: " + std::to_string(id) + " contains the same point twice which is not allowed.");
        }
