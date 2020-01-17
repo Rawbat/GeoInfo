@@ -51,7 +51,6 @@ int main() {
 
   std::cout << det_q << std::endl;*/
 
-  Circle test(1, Point(2, 2));
 
 	Application application;
 	application.run();
