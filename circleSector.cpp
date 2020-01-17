@@ -20,7 +20,7 @@ CircleSector::CircleSector(int id, Point center, double radius, Point opening_po
 //-----------------------------------------------------------------------------
 double CircleSector::getArea() const {
   double area;
-  area = (M_PI * aperture_m / 180) * std::pow(getRadius(), 2);
+  area = (aperture_m / 360) * std::pow(getRadius(), 2) * M_PI;
   return area;
 }
 

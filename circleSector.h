@@ -13,7 +13,7 @@ Authors: Patrick Ablinger, Robert Leiner
 class CircleSector : public Surface {
 	public:
 		//Constructors
-		CircleSector(int id, Point center, double radius, Point opening_point, double aperture);
+		CircleSector(int id, Point center, double radius = 1, Point opening_point, double aperture);
 
       /// <summary>Returns the center of the circle sector.</summary>
       /// <returns>The center as a point.</returns>
