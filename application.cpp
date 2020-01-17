@@ -296,6 +296,9 @@ void Application::selectSurfaces(std::string input) {
 		}
 	}
 	std::cout << "Selected " << selected_surfaces_m.size() << " surfaces" << std::endl;
+
+   //Check if the user added more arguments than neccessary
+   CommandLineInterface::printAdditionalArguments(input);
 }
 
 //-----------------------------------------------------------------------------
@@ -408,8 +411,6 @@ void Application::printSurfaces(std::string input) {
 	else {
 		printSingleSurface(mode);
 	}
-
-	
 }
 
 //-----------------------------------------------------------------------------
