@@ -69,14 +69,10 @@ bool Polygon::doesSelfIntersect() const {
       else if ((pos_q1 < 0 && pos_q2 > 0) || (pos_q1 > 0 && pos_q2 < 0)) {
         Point s = edges_m.at(i).getIntersection(edges_m.at(j));
 
-        double distance_p1_p2 = p1.getEuclidianDistance(p2);
-        double distance_p1_s = p1.getEuclidianDistance(s);
-        double distance_p2_s = p2.getEuclidianDistance(s);
-
-        //True if s is actually between p1 and p2 on the line
-        if (distance_p1_s < distance_p1_p2 && distance_p2_s < distance_p1_p2) {
-          return true;
-        }
+		//True if s is actually between p1 and p2 on the line
+		if (checkAdditionalPointIntersectionCriteria(p1, p2, s)) {
+			return true;
+		}
       }
     }
   }
