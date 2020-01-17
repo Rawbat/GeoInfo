@@ -24,7 +24,7 @@ Polygon::Polygon(int id, std::vector<Point> points) {
 	setName("POLYGON");
 
    if (doesSelfIntersect()) {
-     throw std::invalid_argument("Polygon with id: " + std::to_string(id) + " does self intersect. Only non self intersecting polygons are allowed.");
+     throw std::invalid_argument("[Error] Polygon with id: " + std::to_string(id) + " does self intersect. Only non self intersecting polygons are allowed.");
    }
 }
 

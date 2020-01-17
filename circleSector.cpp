@@ -12,6 +12,7 @@ CircleSector::CircleSector(int id, Point center, double radius, Point opening_po
 	id_m = id;
 	center_m = center;
 	radius_m = radius;
+   setAperture(aperture);
 	aperture_m = aperture;
 	opening_point_m = opening_point;
 	setName("SECTOR");
@@ -41,6 +42,9 @@ void CircleSector::setRadius(double radius) {
 
 //-----------------------------------------------------------------------------
 void CircleSector::setAperture(double aperture) {
+  if (aperture > 360 || aperture < 0) {
+    throw std::invalid_argument("[Error] Circle sector with id " + std::to_string(id_m) + " has an invalid aperture: " + std::to_string(aperture));
+  }
 	aperture_m = aperture;
 }
 
