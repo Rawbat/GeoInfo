@@ -181,6 +181,7 @@ void Application::createSurfaceOfString(std::string input) {
 				surfaces_m.push_back(temp_polygon);
 			}
 			selected_surfaces_m = surfaces_m;
+         std::cout << "Added new  " << type << std::endl;
 		}
 		else {
 			throw std::invalid_argument("[ERROR] ID already existing: '" + std::to_string(id));
@@ -258,6 +259,8 @@ void Application::sortSurfaces(std::string input) {
 
 		}
 	}
+
+   std::cout << "Sorted selected surfaces by area in " << type << " order." << std::endl;
 
 	//Check if the user added more arguments than neccessary
 	CommandLineInterface::printAdditionalArguments(input);
