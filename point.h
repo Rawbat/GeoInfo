@@ -36,6 +36,11 @@ class Point {
       /// <returns>The euclidian distance between the two points as a double.</returns>
       double getEuclidianDistance(Point point) const;
 
+      /// <summary>The overloaded equal comparison operator. Returns a boolean with the result.</summary>
+      /// <param name="point">The point to be compared with.</param>  
+      /// <returns>True if the passed point is equal to this one. That means if both the x and y coordinate are equal.</returns> 
+      bool operator==(const Point& point) const;
+
       /// <summary>The overloaded not equal comparison operator. Returns a boolean with the result.</summary>
       /// <param name="point">The point to be compared with.</param>  
       /// <returns>True if the passed point is not equal to this one. That means if either the x or y coordinate is different.</returns> 

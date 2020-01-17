@@ -33,6 +33,14 @@ double Point::getEuclidianDistance(const Point point) const {
 }
 
 //-----------------------------------------------------------------------------
+bool Point::operator==(const Point& point) const {
+  if (getX() == point.getX() && getY() == point.getY()) {
+    return true;
+  }
+  return false;
+}
+
+//-----------------------------------------------------------------------------
 bool Point::operator!=(const Point& point) const {
   if (getX() != point.getX() || getY() != point.getY()) {
     return true;

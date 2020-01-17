@@ -15,6 +15,14 @@ Polygon::Polygon(int id, std::vector<Point> points) {
 		throw std::invalid_argument("[Error] Too few points in polygon: " + std::to_string(points.size()) + "; 3 required");
 	}
 
+   for (int i = 0; i < points.size(); i++) {
+     for (int j = i; j < points.size(); j++) {
+       if (points.at(i) == points.at(j)) {
+         throw std::invalid_argument("[Error] Polygon with id: " + std::to_string(id) + " contains the same point twice which is not allowed.");
+       }
+     }
+   }
+
 	for (unsigned int p = 0; p < points.size() - 1; p++) {
 		edges_m.push_back(Line(points.at(p), points.at(p + 1)));
 	}
